@@ -45,6 +45,7 @@ def uninstall_jupyter_here():
                 winreg.HKEY_CLASSES_ROOT,
                 r'Directory\Background\shell\jupyter_%s_here' %
                 env)
+        print("Jupyter %s here context menu entry removed." % env)
         except:
             # If this fails it is because it was not installed, so nothing to
             # worry about.
@@ -115,3 +116,5 @@ def install_jupyter_here():
             env)
         winreg.SetValueEx(key, "", 0, winreg.REG_EXPAND_SZ, script)
         key.Close()
+
+        print("Jupyter %s here context menu entry created." % env)
