@@ -58,3 +58,5 @@ target/
 
 # Vim backup
 *.swp
+# Vim ropeproject
+.ropeproject*

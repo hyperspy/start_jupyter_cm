@@ -19,7 +19,11 @@
 
 import os
 import sys
-import winreg
+try:
+    import winreg
+except ImportError:
+    # Python 2
+    import _winreg as winreg
 from win32com.shell import shell
 
 
@@ -113,5 +117,5 @@ def install_jupyter_here():
             winreg.HKEY_CLASSES_ROOT,
             r'Directory\Background\shell\jupyter_%s_here\Command' %
             env)
-        winreg.SetValueEx(key, "", 0, _winreg.REG_EXPAND_SZ, script)
+        winreg.SetValueEx(key, "", 0, winreg.REG_EXPAND_SZ, script)
         key.Close()
