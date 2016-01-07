@@ -100,7 +100,7 @@ def install_jupyter_here():
             "",
             0,
             winreg.REG_SZ,
-            "Jupyter %s Here" %
+            "Jupyter %s here" %
             env)
         winreg.SetValueEx(
             key,
