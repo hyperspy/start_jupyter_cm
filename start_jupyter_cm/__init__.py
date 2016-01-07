@@ -26,10 +26,6 @@ except ImportError:
     import _winreg as winreg
 from win32com.shell import shell
 
-
-def admin_rights():
-    return shell.IsUserAnAdmin()
-
 def uninstall_jupyter_here():
     for env in ('qtconsole', 'notebook'):
         try:
