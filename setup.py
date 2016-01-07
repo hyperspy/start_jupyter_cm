@@ -21,9 +21,6 @@ from distutils.core import setup
 import os
 import sys
 
-import distutils.dir_util
-
-
 install_req = ['jupyter', 'qtconsole', ]
 
 
@@ -40,15 +37,6 @@ if are_we_building4windows() or os.name in ['nt', 'dos']:
     # that runs the different scripts.
     # (code adapted from scitools)
     scripts.extend(('scripts/win_post_installation.py',))
-    batch_files = []
-    for script in scripts:
-        batch_file = os.path.splitext(script)[0] + '.bat'
-        f = open(batch_file, "w")
-        f.write('set path=%~dp0;%~dp0\..\;%PATH%\n')
-        f.write('python "%%~dp0\%s" %%*\n' % os.path.split(script)[1])
-        f.close()
-        batch_files.append(batch_file)
-    scripts.extend(batch_files)
 
 setup(
     name="start_jupyter_cm",
