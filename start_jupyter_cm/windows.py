@@ -26,6 +26,7 @@ except ImportError:
     import _winreg as winreg
 from win32com.shell import shell
 
+
 def uninstall_jupyter_here():
     for env in ('qtconsole', 'notebook'):
         try:
@@ -45,7 +46,7 @@ def uninstall_jupyter_here():
                 winreg.HKEY_CLASSES_ROOT,
                 r'Directory\Background\shell\jupyter_%s_here' %
                 env)
-        print("Jupyter %s here context menu entry removed." % env)
+            print("Jupyter %s here context menu entry removed." % env)
         except:
             # If this fails it is because it was not installed, so nothing to
             # worry about.
