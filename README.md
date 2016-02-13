@@ -1,10 +1,9 @@
-# start_ipython_cm
+# start_jupyter_cm
 
 ## Description
 
 Add entries to start the Jypyter Notebook and QtConsole from the file manager
-context menu. Currently it only supports Windows. This offers a convenient
-way of starting Jupyter in a folder.
+context menu. This offers a convenient way of starting Jupyter in a folder. Currently it only supports Microsoft Windows and GNoME. Contributions to support other OSs/desktop environments are highly welcome.
 
 ### Windows
 ![Jupyter context menu entries in windows](/images/jupyter_cm_windows.png)
@@ -18,7 +17,7 @@ way of starting Jupyter in a folder.
 ### Windows
 
 In Windows the preferred way to install this package is by using the Windows MSI
-installers provided. Installing the package add the context menu entries and
+installers provided. Installing the package adds the context menu entries and
 uninstalling it removes them.
 
 ### Any platform
@@ -43,6 +42,8 @@ To remove the context menu entries execute the following in a Python session:
 >>> import start_jupyter_cm
 >>> start_jupyter_cm.uninstall_jupyter_here()
 ```
+
+Note that adding and removing the entries as above may require administration rights in Microsoft Windows.
 
 To uninstall the package:
 
