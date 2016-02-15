@@ -20,6 +20,14 @@
 from distutils.core import setup
 import os
 import sys
+# To use a consistent encoding
+from codecs import open
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+# Get the long description from the README file
+with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 install_req = ['jupyter', 'qtconsole', ]
 
@@ -45,19 +53,26 @@ setup(
     packages=['start_jupyter_cm', ],
     requires=install_req,
     scripts=scripts,
-    package_data={'start_jupyter_cm': ['scripts/*.py', 'icons/*.ico', ]},
+    package_data={'start_jupyter_cm': ['scripts/*.py',
+                                       'icons/*.ico',
+                                       'icons/*.png']},
     author="The HyperSpy Developers",
-    description="Add entries to start Jupyter from context menu",
+    description="Add entries to start Jupyter from context menu.",
+    long_description=long_description,
     license="BSDv3",
-    # classifiers=[
-    #     "Programming Language :: Python :: 2.7",
-    #     "Development Status :: 4 - Beta",
-    #     "Environment :: Console",
-    #     "Intended Audience :: Science/Research",
-    #     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    #     "Natural Language :: English",
-    #     "Operating System :: OS Independent",
-    #     "Topic :: Scientific/Engineering",
-    #     "Topic :: Scientific/Engineering :: Physics",
-    # ],
+    url="https://github.com/hyperspy/start_jupyter_cm",
+    classifiers=[
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 3",
+        "Development Status :: 4 - Beta",
+        "Environment :: Console",
+        "License :: OSI Approved :: BSD License",
+        "Natural Language :: English",
+        "Operating System :: OS Independent",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: Unix",
+        "Topic :: Desktop Environment :: Gnome",
+    ],
 )
