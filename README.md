@@ -33,14 +33,14 @@ follows:
 
 ```python
 >>> import start_jupyter_cm
->>> start_jupyter_cm.install_jupyter_here()
+>>> start_jupyter_cm.add_jupyter_here()
 ```
 
 To remove the context menu entries execute the following in a Python session:
 
 ```python
 >>> import start_jupyter_cm
->>> start_jupyter_cm.uninstall_jupyter_here()
+>>> start_jupyter_cm.remove_jupyter_here()
 ```
 
 Note that adding and removing the entries as above may require administration rights in Microsoft Windows.

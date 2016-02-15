@@ -27,7 +27,7 @@ except ImportError:
 from win32com.shell import shell
 
 
-def uninstall_jupyter_here():
+def remove_jupyter_here():
     for env in ('qtconsole', 'notebook'):
         try:
             winreg.DeleteKey(
@@ -53,7 +53,7 @@ def uninstall_jupyter_here():
             pass
 
 
-def install_jupyter_here():
+def add_jupyter_here():
     # Install the context menu entries for the qtconsole and the notebook
     logo_path = os.path.expandvars(os.path.join(
         os.path.dirname(__file__), 'icons'))
