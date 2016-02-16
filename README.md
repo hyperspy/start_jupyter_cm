@@ -31,7 +31,7 @@ servers and shut them down using via an UI.
 
 In Microsoft Windows the preferred way to install this package is by using the
 Windows MSI installers provided. Installing the package adds the context menu
-entries *for all users**. Uninstalling the package would remove them if
+entries *for all users*. Uninstalling the package would remove them if
 it wasn't for [this Python bug](http://bugs.python.org/issue13276). Therefore,
 before uninstalling the package, follow the instructions in the section below
 to remove the entries from the context menu.
