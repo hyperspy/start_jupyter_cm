@@ -20,8 +20,9 @@ terminal. Closing the terminal closes the QtConsole or the Jupyter server.
 ![Jupyter context menu entries in windows](/images/jupyter_cm_gnome.png)
 
 Note that in GNOME the processes run in the background. As of Jupyter Notebook
-4.1 there is no way to shutdown the server from the notebook UI. To stop
-the server one has to manually kill the process. Alternatively, [nbmanager](https://github.com/takluyver/nbmanager) can discover all running
+4.1 there is no way to shutdown the server from the notebook UI. To stop the
+server one has to manually kill the process. Alternatively,
+[nbmanager](https://github.com/takluyver/nbmanager) can discover all running
 servers and shut them down using via an UI.
 
 ## Installation instructions
