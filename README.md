@@ -14,9 +14,9 @@ context menu. This offers a convenient way of starting Jupyter in a folder. Curr
 
 ## Install
 
-### Windows
+### Microsoft Windows
 
-In Windows the preferred way to install this package is by using the Windows MSI
+In Microsoft Windows the preferred way to install this package is by using the Windows MSI
 installers provided. Installing the package adds the context menu entries and
 uninstalling it removes them.
 
@@ -54,12 +54,11 @@ $ pip uninstall start_jupyter_cm
 
 ```
 
-Note that when not installing from a Windows MSI installer, uninstalling the
+Note that when not installing from a Microsoft Windows MSI installer, uninstalling the
 package does not remove the context menu entries.
 
 ## Creating the Windows installers from source
 
 Unfortunatelly, due to [this Python bug](http://bugs.python.org/issue13276),
-distutils must be patched to create the Windows MSI binaries
-[as detailed here](https://code.google.com/p/spyderlib/wiki/PatchingDistutils).
+distutils must be patched to create the Windows MSI binaries.
 The MSI installers that we distribute has been created with this patch applied.
