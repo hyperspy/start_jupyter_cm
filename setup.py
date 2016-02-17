@@ -49,7 +49,7 @@ if are_we_building4windows() or os.name in ['nt', 'dos']:
 setup(
     name="start_jupyter_cm",
     package_dir={'start_jupyter_cm': 'start_jupyter_cm'},
-    version="1.0",
+    version="1.0.1",
     packages=['start_jupyter_cm', ],
     requires=install_req,
     scripts=scripts,
