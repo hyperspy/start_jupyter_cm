@@ -67,21 +67,17 @@ Install from pypi using pip e.g.:
 
     $ pip install start_jupyter_cm
 
-After installation, enable the context menu entries from a Python
-session as follows:
+After installation, enable the context menu entries from a terminal as follows:
 
-.. code:: python
+.. code:: bash
 
-    >>> import start_jupyter_cm
-    >>> start_jupyter_cm.add_jupyter_here()
+    $ jupyter-context_menu-add
 
-To remove the context menu entries execute the following in a Python
-session:
+To remove the context menu entries execute the following in a terminal:
 
-.. code:: python
+.. code::
 
-    >>> import start_jupyter_cm
-    >>> start_jupyter_cm.remove_jupyter_here()
+    $ jupyter-context_menu-remove
 
 To uninstall the package:
 

@@ -1,6 +1,6 @@
 import os
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 if os.name == "nt":
     from start_jupyter_cm.windows import (add_jupyter_here,
@@ -8,3 +8,11 @@ if os.name == "nt":
 else:
     from start_jupyter_cm.gnome import (add_jupyter_here,
                                         remove_jupyter_here)
+
+
+def _add():
+    add_jupyter_here()
+
+
+def _remove():
+    remove_jupyter_here()

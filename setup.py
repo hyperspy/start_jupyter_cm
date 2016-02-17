@@ -16,12 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with  HyperSpy.  If not, see <http://www.gnu.org/licenses/>.
 
-
-from distutils.core import setup
+from setuptools import setup
 import os
 import sys
 # To use a consistent encoding
 from codecs import open
+
+import start_jupyter_cm
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -49,7 +50,7 @@ if are_we_building4windows() or os.name in ['nt', 'dos']:
 setup(
     name="start_jupyter_cm",
     package_dir={'start_jupyter_cm': 'start_jupyter_cm'},
-    version="1.0.2",
+    version=start_jupyter_cm.__version__,
     packages=['start_jupyter_cm', ],
     requires=install_req,
     scripts=scripts,
@@ -76,4 +77,9 @@ setup(
         "Operating System :: Unix",
         "Topic :: Desktop Environment :: Gnome",
     ],
+    entry_points={
+        'console_scripts': [
+            'jupyter-context_menu-add = start_jupyter_cm:_add',
+            'jupyter-context_menu-remove = start_jupyter_cm:_remove',
+        ], }
 )
