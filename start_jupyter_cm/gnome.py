@@ -5,6 +5,24 @@ from subprocess import call
 NPATH = os.path.expanduser("~/.local/share/nautilus")
 SPATH = os.path.join(NPATH, "scripts")
 
+script = \
+    """#!/usr/bin/python
+
+import sys
+import os.path
+import subprocess
+
+folders = [path for path in sys.argv[1:] if os.path.isdir(path)]
+any_file_selected = len(folders) < len(sys.argv[1:])
+if any_file_selected:
+    subprocess.Popen(["jupyter-%s"])
+for folder in folders:
+    os.chdir(folder)
+    subprocess.Popen(["jupyter-%s"])
+    os.chdir("..")
+
+"""
+
 
 def add_jupyter_here():
     if not os.path.exists(NPATH):
@@ -21,12 +39,12 @@ def add_jupyter_here():
         script_path = os.path.join(SPATH, "Jupyter %s here" % terminal)
         if not os.path.exists(script_path):
             with open(script_path, "w") as f:
-                f.write("#!/bin/sh\njupyter-%s" % terminal)
+                f.write(script % (terminal, terminal))
             st = os.stat(script_path)
             os.chmod(script_path, st.st_mode | stat.S_IEXEC)
-            print('Jupyter %s here created.' % terminal)
             call(['gvfs-set-attribute', '-t', 'string', '%s' % script_path,
                   'metadata::custom-icon', 'file://%s' % logos[terminal]])
+            print('Jupyter %s here created.' % terminal)
 
 
 def remove_jupyter_here():
