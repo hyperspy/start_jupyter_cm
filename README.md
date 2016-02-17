@@ -20,7 +20,7 @@ terminal. Closing the terminal closes the QtConsole or the Jupyter server.
 ![Jupyter context menu entries in windows](/images/jupyter_cm_gnome.png)
 
 When selecting multiple folders, one instance of Jupyter QtConsole/notebook
-will be open in each of the selected folders. Selecting a file starts
+opens in each of the selected folders. Selecting a file starts
 Jupyter in the file directory.
 
 Note that in GNOME the processes run in the background. As of Jupyter Notebook
