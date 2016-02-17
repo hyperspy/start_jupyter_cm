@@ -55,6 +55,9 @@ bug <http://bugs.python.org/issue13276>`__. Therefore, before
 uninstalling the package, follow the instructions in the section below
 to remove the entries from the context menu.
 
+You can download the MSI installers from
+`pypi <https://pypi.python.org/pypi/start_jupyter_cm/>`_.
+
 Any platform
 ~~~~~~~~~~~~
 
