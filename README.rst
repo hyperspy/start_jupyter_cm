@@ -44,19 +44,6 @@ can discover all running servers and shut them down using via an UI.
 Installation instructions
 -------------------------
 
-Microsoft Windows
-~~~~~~~~~~~~~~~~~
-
-In Microsoft Windows the preferred way to install this package is by
-using the Windows MSI installers provided. Installing the package adds
-the context menu entries *for all users*. Uninstalling the package would
-remove them if it wasn't for `this Python
-bug <http://bugs.python.org/issue13276>`__. Therefore, before
-uninstalling the package, follow the instructions in the section below
-to remove the entries from the context menu.
-
-You can download the MSI installers from
-`pypi <https://pypi.python.org/pypi/start_jupyter_cm/>`_.
 
 Any platform
 ~~~~~~~~~~~~
@@ -90,10 +77,18 @@ Note that adding and removing the entries as above may require
 administration rights in Microsoft Windows. In Microsoft Windows the
 entries are added for all users. In GNOME only for the current user.
 
-Also, be aware that, in most cases, uninstalling the package does not
+Also, be aware that, uninstalling the package does not
 remove the context menu entries. If you are left with the context menu
 entries after uninstalling ``start_jupyter_cm``, reinstall it, remove
 the entries as above and uninstall it again.
+
+Microsoft Windows
+~~~~~~~~~~~~~~~~~
+
+In Microsoft Windows the preferred way to install this package would be
+using the Windows MSI installers if it wasn't for `this Python
+bug <http://bugs.python.org/issue13276>`__. Until this issue is fixed, we will
+not distribute MSI installers.
 
 Related software
 ----------------
