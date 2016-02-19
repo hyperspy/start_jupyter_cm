@@ -70,7 +70,7 @@ def add_jupyter_here():
             script = os.path.join(
                 sys.prefix, 'Scripts', "jupyter-%s.exe" % env)
 
-        shell_script = script + " --notebook-dir %L" if env == "notebook"\
+        shell_script = script + ' --notebook-dir "%1"' if env == "notebook"\
             else script
 
         key = winreg.CreateKey(
