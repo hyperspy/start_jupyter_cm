@@ -69,6 +69,10 @@ def add_jupyter_here():
         else:
             script = os.path.join(
                 sys.prefix, 'Scripts', "jupyter-%s.exe" % env)
+
+        shell_script = script + " --notebook-dir %L" if env == "notebook"\
+            else script
+
         key = winreg.CreateKey(
             winreg.HKEY_CLASSES_ROOT,
             r'Directory\shell\jupyter_%s_here' %
@@ -97,8 +101,7 @@ def add_jupyter_here():
             "",
             0,
             winreg.REG_EXPAND_SZ,
-            script +
-            " \"%L\"")
+            shell_script)
         key.Close()
         key = winreg.CreateKey(
             winreg.HKEY_CLASSES_ROOT,
