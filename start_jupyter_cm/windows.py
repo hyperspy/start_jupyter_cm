@@ -60,7 +60,15 @@ def add_jupyter_here():
     logos = {'qtconsole': os.path.join(logo_path, 'jupyter-qtconsole.ico'),
              'notebook': os.path.join(logo_path, 'jupyter.ico')}
     for env in ('qtconsole', 'notebook'):
-        script = os.path.join(sys.prefix, 'Scripts', "jupyter-%s.exe" % env)
+        if "WINPYDIR" in os.environ:
+            # Calling from WinPython
+            # Paths are relative, so we have to set the env first
+            script = os.path.join(os.environ["WINPYDIR"], "..", "Scripts",
+                                  "env.bat")
+            script += " & jupyter-%s" % env
+        else:
+            script = os.path.join(
+                sys.prefix, 'Scripts', "jupyter-%s.exe" % env)
         key = winreg.CreateKey(
             winreg.HKEY_CLASSES_ROOT,
             r'Directory\shell\jupyter_%s_here' %
