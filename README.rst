@@ -14,9 +14,9 @@ Microsoft Windows
 ~~~~~~~~~~~~~~~~~
 
 .. figure:: images/jupyter_cm_windows.png
-   :alt: Jupyter context menu entries in windows
+   :alt: Jupyter context menu entries in Windows
 
-   Jupyter context menu entries in windows
+   Jupyter context menu entries in Windows
 
 In addition to starting the QtConsole or the Jupyter Notebook server and
 launching the default browser, in Microsoft Windows the process runs
@@ -27,15 +27,23 @@ GNOME
 ~~~~~
 
 .. figure:: images/jupyter_cm_gnome.png
-   :alt: Jupyter context menu entries in windows
+   :alt: Jupyter context menu entries in Gnome
 
-   Jupyter context menu entries in windows
+   Jupyter context menu entries in Gnome (in GNOME Files file browser)
+
+KDE
+~~~
+
+.. figure:: images/jupyter_cm_kde.png
+   :alt: Jupyter context menu entries in KDE
+
+   Jupyter context menu entries in KDE (in Dolphin file browser)
 
 When selecting multiple folders, one instance of Jupyter
 QtConsole/notebook opens in each of the selected folders. Selecting a
 file starts Jupyter in the file directory.
 
-Note that in GNOME the processes run in the background. As of Jupyter
+Note that in GNOME and KDE, the processes run in the background. As of Jupyter
 Notebook 4.1 there is no way to shutdown the server from the notebook
 UI. To stop the server one has to manually kill the process.
 Alternatively, `nbmanager <https://github.com/takluyver/nbmanager>`__
