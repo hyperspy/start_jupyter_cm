@@ -26,6 +26,7 @@ except ImportError:
     import _winreg as winreg
 from win32com.shell import shell
 
+WPSCRIPTS_FOLDER = "Scripts"
 
 def remove_jupyter_here():
     for env in ('qtconsole', 'notebook'):
@@ -63,7 +64,8 @@ def add_jupyter_here():
         if "WINPYDIR" in os.environ:
             # Calling from WinPython
             # Paths are relative, so we have to set the env first
-            script = os.path.join(os.environ["WINPYDIR"], "..", "Scripts",
+            script = os.path.join(os.environ["WINPYDIR"], "..",
+                                  WPSCRIPTS_FOLDER,
                                   "env.bat")
             script += " & jupyter-%s" % env
         else:
