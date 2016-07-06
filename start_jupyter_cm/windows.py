@@ -28,6 +28,7 @@ from win32com.shell import shell
 
 WPSCRIPTS_FOLDER = "Scripts"
 
+
 def remove_jupyter_here():
     for env in ('qtconsole', 'notebook'):
         try:
@@ -69,8 +70,22 @@ def add_jupyter_here():
                                   "env.bat")
             script += " & jupyter-%s" % env
         else:
-            script = os.path.join(
-                sys.prefix, 'Scripts', "jupyter-%s.exe" % env)
+            if env == "notebook":
+                script = os.path.join(
+                    sys.prefix, 'Scripts', "jupyter-%s.exe" % env)
+            else:
+                # Leveraging pythonw.exe to hide ugly back-end CMD window.
+                # Notebook is left as it was, because it needs a CMD window to
+                # log service info.
+                pyw_path = os.path.join(sys.prefix, 'pythonw.exe')
+                jpt_path = os.path.join(
+                    sys.prefix, 'Scripts', 'jupyter-script.py')
+                if os.path.exists(jpt_path):
+                    # alternate jupyter with ipython for older version
+                    # releases.
+                    jpt_path = os.path.join(
+                        sys.prefix, 'Scripts', 'ipython-script.py')
+                script = ' '.join([pyw_path, jpt_path, 'qtconsole'])
 
         shell_script = script + ' --notebook-dir "%1"' if env == "notebook"\
             else script
