@@ -26,7 +26,8 @@ for folder in folders:
 
 def add_jupyter_here():
     if not os.path.exists(NPATH):
-        print("Nothing done. Currently only Gnome and Windows are supported.")
+        print("Nothing done. Currently only Gnome with Nautilus as file ",
+              "manager is supported.")
         return
     if not os.path.exists(SPATH):
         os.makedirs(SPATH)
@@ -42,7 +43,7 @@ def add_jupyter_here():
                 f.write(script % (terminal, terminal))
             st = os.stat(script_path)
             os.chmod(script_path, st.st_mode | stat.S_IEXEC)
-            call(['gvfs-set-attribute', '-t', 'string', '%s' % script_path,
+            call(['gio', 'set', '-t', 'string', '%s' % script_path,
                   'metadata::custom-icon', 'file://%s' % logos[terminal]])
             print('Jupyter %s here created.' % terminal)
 
