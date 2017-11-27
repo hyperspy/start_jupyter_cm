@@ -16,7 +16,7 @@ Microsoft Windows
 .. figure:: images/jupyter_cm_windows.png
    :alt: Jupyter context menu entries in windows
 
-   Jupyter context menu entries in windows
+   Jupyter context menu entries in windows.
 
 In addition to starting the QtConsole or the Jupyter Notebook server and
 launching the default browser, in Microsoft Windows the process runs
@@ -29,7 +29,7 @@ GNOME
 .. figure:: images/jupyter_cm_gnome.png
    :alt: Jupyter context menu entries in windows
 
-   Jupyter context menu entries in windows
+   Jupyter context menu entries in gnome.
 
 When selecting multiple folders, one instance of Jupyter
 QtConsole/notebook opens in each of the selected folders. Selecting a
@@ -40,6 +40,8 @@ Notebook 4.1 there is no way to shutdown the server from the notebook
 UI. To stop the server one has to manually kill the process.
 Alternatively, `nbmanager <https://github.com/takluyver/nbmanager>`__
 can discover all running servers and shut them down using via an UI.
+
+GNOME >= 2.22 is required.
 
 Installation instructions
 -------------------------
