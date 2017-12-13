@@ -26,7 +26,16 @@ except ImportError:
     import _winreg as winreg
 from win32com.shell import shell
 
+PYTHON_PATH = os.environ[
+    "WINPYDIR"] if "WINPYDIR" in os.environ else sys.prefix
 WPSCRIPTS_FOLDER = "Scripts"
+QTCONSOLE_SCRIPT = """from qtconsole.qtconsoleapp import main
+
+
+if __name__  == '__main__':
+    main()
+"""
+
 
 def remove_jupyter_here():
     for env in ('qtconsole', 'notebook'):
@@ -47,6 +56,9 @@ def remove_jupyter_here():
                 winreg.HKEY_CLASSES_ROOT,
                 r'Directory\Background\shell\jupyter_%s_here' %
                 env)
+            # remove sjc-jupyter-qtconsole-script.py when un-installing
+            os.remove(os.path.join(PYTHON_PATH, 'Scripts',
+                                   'sjc-jupyter-qtconsole-script.py'))
             print("Jupyter %s here context menu entry removed." % env)
         except:
             # If this fails it is because it was not installed, so nothing to
@@ -60,17 +72,26 @@ def add_jupyter_here():
         os.path.dirname(__file__), 'icons'))
     logos = {'qtconsole': os.path.join(logo_path, 'jupyter-qtconsole.ico'),
              'notebook': os.path.join(logo_path, 'jupyter.ico')}
+
+    # Here I need to create a script for pythonw
+    scr_fw = open(os.path.join(PYTHON_PATH, 'Scripts',
+                               'sjc-jupyter-qtconsole-script.py'), 'w')
+    scr_fw.write(QTCONSOLE_SCRIPT)
+    scr_fw.close()
+
     for env in ('qtconsole', 'notebook'):
-        if "WINPYDIR" in os.environ:
-            # Calling from WinPython
-            # Paths are relative, so we have to set the env first
-            script = os.path.join(os.environ["WINPYDIR"], "..",
-                                  WPSCRIPTS_FOLDER,
-                                  "env.bat")
-            script += " & jupyter-%s" % env
+        if env == 'notebook':
+            if "WINPYDIR" in os.environ:
+                # Calling from WinPython
+                # Paths are relative, so we have to set the env first
+                script = os.path.join(
+                    PYTHON_PATH, "..", WPSCRIPTS_FOLDER, "env.bat") + " & jupyter-notebook"
+            else:
+                script = os.path.join(
+                    PYTHON_PATH, 'Scripts', 'jupyter-notebook.exe')
         else:
-            script = os.path.join(
-                sys.prefix, 'Scripts', "jupyter-%s.exe" % env)
+            script = os.path.join(PYTHON_PATH, 'pythonw.exe') + ' ' + os.path.join(
+                PYTHON_PATH, 'Scripts', 'sjc-jupyter-qtconsole-script.py')
 
         shell_script = script + ' --notebook-dir "%1"' if env == "notebook"\
             else script
