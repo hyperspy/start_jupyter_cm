@@ -1,9 +1,10 @@
-import os
+import os, sys
 import stat
 from subprocess import call
 
 NPATH = os.path.expanduser("~/.local/share/nautilus")
 SPATH = os.path.join(NPATH, "scripts")
+PATH = "%s/bin"%sys.exec_prefix
 
 script = \
     """#!/usr/bin/python
@@ -15,10 +16,10 @@ import subprocess
 folders = [path for path in sys.argv[1:] if os.path.isdir(path)]
 any_file_selected = len(folders) < len(sys.argv[1:])
 if any_file_selected:
-    subprocess.Popen(["jupyter-%s"])
+    subprocess.Popen(["%s/jupyter-%s"])
 for folder in folders:
     os.chdir(folder)
-    subprocess.Popen(["jupyter-%s"])
+    subprocess.Popen(["%s/jupyter-%s"])
     os.chdir("..")
 
 """
@@ -41,7 +42,7 @@ def add_jupyter_here():
         script_path = os.path.join(SPATH, "Jupyter %s here" % terminal)
         if not os.path.exists(script_path):
             with open(script_path, "w") as f:
-                f.write(script % (terminal, terminal))
+                f.write(script % (PATH, terminal, PATH, terminal))
             st = os.stat(script_path)
             os.chmod(script_path, st.st_mode | stat.S_IEXEC)
             call(['gio', 'set', '-t', 'string', '%s' % script_path,
