@@ -24,12 +24,11 @@ try:
 except ImportError:
     # Python 2
     import _winreg as winreg
-from win32com.shell import shell
 
 WPSCRIPTS_FOLDER = "Scripts"
 
 def remove_jupyter_here():
-    for env in ('qtconsole', 'notebook'):
+    for env in ('qtconsole', 'notebook', 'lab'):
         try:
             winreg.DeleteKey(
                 winreg.HKEY_CLASSES_ROOT,
@@ -59,8 +58,9 @@ def add_jupyter_here():
     logo_path = os.path.expandvars(os.path.join(
         os.path.dirname(__file__), 'icons'))
     logos = {'qtconsole': os.path.join(logo_path, 'jupyter-qtconsole.ico'),
-             'notebook': os.path.join(logo_path, 'jupyter.ico')}
-    for env in ('qtconsole', 'notebook'):
+             'notebook': os.path.join(logo_path, 'jupyter.ico'),
+             'lab': os.path.join(logo_path, 'jupyter.ico')}
+    for env in ('qtconsole', 'notebook', 'lab'):
         if "WINPYDIR" in os.environ:
             # Calling from WinPython
             # Paths are relative, so we have to set the env first

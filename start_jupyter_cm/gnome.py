@@ -35,8 +35,9 @@ def add_jupyter_here():
     logo_path = os.path.expandvars(os.path.join(
         os.path.dirname(__file__), 'icons'))
     logos = {'qtconsole': os.path.join(logo_path, 'jupyter-qtconsole.png'),
-             'notebook': os.path.join(logo_path, 'jupyter.png')}
-    for terminal in ["qtconsole", "notebook"]:
+             'notebook': os.path.join(logo_path, 'jupyter.png'),
+             'lab': os.path.join(logo_path, 'jupyter.png')}
+    for terminal in ["qtconsole", "notebook", "lab"]:
         script_path = os.path.join(SPATH, "Jupyter %s here" % terminal)
         if not os.path.exists(script_path):
             with open(script_path, "w") as f:
@@ -49,7 +50,7 @@ def add_jupyter_here():
 
 
 def remove_jupyter_here():
-    for terminal in ["qtconsole", "notebook"]:
+    for terminal in ["qtconsole", "notebook", "lab"]:
         script_path = os.path.join(SPATH, "Jupyter %s here" % terminal)
         if os.path.exists(script_path):
             os.remove(script_path)
