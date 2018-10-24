@@ -18,10 +18,9 @@ Microsoft Windows
 
    Jupyter context menu entries in windows.
 
-In addition to starting the QtConsole or the Jupyter Notebook server and
-launching the default browser, in Microsoft Windows the process runs
-from a terminal. Closing the terminal closes the QtConsole or the
-Jupyter server.
+In addition to starting the QtConsole, the Jupyter Notebook or the Jupyter Lab, 
+and launching the default browser, in Microsoft Windows the process runs from 
+a terminal. Closing the terminal closes the QtConsole or the Jupyter server.
 
 GNOME
 ~~~~~
@@ -32,7 +31,7 @@ GNOME
    Jupyter context menu entries in gnome.
 
 When selecting multiple folders, one instance of Jupyter
-QtConsole/notebook opens in each of the selected folders. Selecting a
+QtConsole/notebook/lab opens in each of the selected folders. Selecting a
 file starts Jupyter in the file directory.
 
 Note that in GNOME the processes run in the background. As of Jupyter
