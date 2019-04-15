@@ -27,39 +27,79 @@ except ImportError:
 
 WPSCRIPTS_FOLDER = "Scripts"
 
+
+def add_jupyter_here():
+    try:
+        _add_jupyter_here(all_users=True)
+    except PermissionError:
+        # No admin privileges, install for single user
+        _add_jupyter_here(all_users=False)
+
+
 def remove_jupyter_here():
+    try:
+        _remove_jupyter_here(all_users=True)
+    except PermissionError:
+        # Admin right required to uninstall
+        print("Administrator privileges are required to uninstall the context "
+              "menu shortcut")
+    else:
+        # No context menu for all users found, uninstall for single user 
+        _remove_jupyter_here(all_users=False)
+
+
+def _remove_jupyter_here(all_users):
+    if all_users:
+        h_key_base = winreg.HKEY_LOCAL_MACHINE
+        install_type = "all users"
+    else:
+        h_key_base = winreg.HKEY_CURRENT_USER
+        install_type = "single user"
+
     for env in ('qtconsole', 'notebook', 'lab'):
         try:
             winreg.DeleteKey(
-                winreg.HKEY_CLASSES_ROOT,
-                r'Directory\shell\jupyter_%s_here\Command' %
+                h_key_base,
+                r'Software\Classes\Directory\shell\jupyter_%s_here\Command' %
                 env)
             winreg.DeleteKey(
-                winreg.HKEY_CLASSES_ROOT,
-                r'Directory\shell\jupyter_%s_here' %
+                h_key_base,
+                r'Software\Classes\Directory\shell\jupyter_%s_here' %
                 env)
             winreg.DeleteKey(
-                winreg.HKEY_CLASSES_ROOT,
-                r'Directory\Background\shell\jupyter_%s_here\Command' %
+                h_key_base,
+                r'Software\Classes\Directory\Background\shell\jupyter_%s_here\Command' %
                 env)
             winreg.DeleteKey(
-                winreg.HKEY_CLASSES_ROOT,
-                r'Directory\Background\shell\jupyter_%s_here' %
+                h_key_base,
+                r'Software\Classes\Directory\Background\shell\jupyter_%s_here' %
                 env)
-            print("Jupyter %s here context menu entry removed." % env)
-        except:
+            print("Jupyter %s here context menu entry removed for %s." % (
+                    env, install_type))
+        except FileNotFoundError:
             # If this fails it is because it was not installed, so nothing to
             # worry about.
             pass
 
 
-def add_jupyter_here():
+def _add_jupyter_here(all_users):
     # Install the context menu entries for the qtconsole and the notebook
     logo_path = os.path.expandvars(os.path.join(
         os.path.dirname(__file__), 'icons'))
     logos = {'qtconsole': os.path.join(logo_path, 'jupyter-qtconsole.ico'),
              'notebook': os.path.join(logo_path, 'jupyter.ico'),
              'lab': os.path.join(logo_path, 'jupyter.ico')}
+    if all_users:
+        # directory_shell = "Directory\shell"
+        # background_shell = "Directory\Background\shell"
+        h_key_base = winreg.HKEY_LOCAL_MACHINE
+        install_type = "all users"
+    else:
+        # directory_shell = "Directory\shell"
+        # background_shell = "Directory\Background\shell"
+        h_key_base = winreg.HKEY_CURRENT_USER
+        install_type = "single user"
+
     for env in ('qtconsole', 'notebook', 'lab'):
         if "WINPYDIR" in os.environ:
             # Calling from WinPython
@@ -76,8 +116,8 @@ def add_jupyter_here():
             else script
 
         key = winreg.CreateKey(
-            winreg.HKEY_CLASSES_ROOT,
-            r'Directory\shell\jupyter_%s_here' %
+            h_key_base,
+            r'Software\Classes\Directory\shell\jupyter_%s_here' %
             env)
         winreg.SetValueEx(
             key,
@@ -95,8 +135,8 @@ def add_jupyter_here():
         )
         key.Close()
         key = winreg.CreateKey(
-            winreg.HKEY_CLASSES_ROOT,
-            r'Directory\shell\jupyter_%s_here\Command' %
+            h_key_base,
+            r'Software\Classes\Directory\shell\jupyter_%s_here\Command' %
             env)
         winreg.SetValueEx(
             key,
@@ -106,8 +146,8 @@ def add_jupyter_here():
             shell_script)
         key.Close()
         key = winreg.CreateKey(
-            winreg.HKEY_CLASSES_ROOT,
-            r'Directory\Background\shell\jupyter_%s_here' %
+            h_key_base,
+            r'Software\Classes\Directory\Background\shell\jupyter_%s_here' %
             env)
         winreg.SetValueEx(
             key,
@@ -125,10 +165,11 @@ def add_jupyter_here():
         )
         key.Close()
         key = winreg.CreateKey(
-            winreg.HKEY_CLASSES_ROOT,
-            r'Directory\Background\shell\jupyter_%s_here\Command' %
+            h_key_base,
+            r'Software\Classes\Directory\Background\shell\jupyter_%s_here\Command' %
             env)
         winreg.SetValueEx(key, "", 0, winreg.REG_EXPAND_SZ, script)
         key.Close()
 
-        print("Jupyter %s here context menu entry created." % env)
+        print("Jupyter %s here context menu entry created for %s." % (
+                env, install_type))
