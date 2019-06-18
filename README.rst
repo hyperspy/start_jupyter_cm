@@ -21,6 +21,7 @@ Microsoft Windows
 In addition to starting the QtConsole, the Jupyter Notebook or the Jupyter Lab, 
 and launching the default browser, in Microsoft Windows the process runs from 
 a terminal. Closing the terminal closes the QtConsole or the Jupyter server.
+Single and all users installations are supported, see installation instructions below.
 
 GNOME
 ~~~~~
@@ -74,9 +75,9 @@ To uninstall the package:
 
     $ pip uninstall start_jupyter_cm
 
-Note that adding and removing the entries as above may require
-administration rights in Microsoft Windows. In Microsoft Windows the
-entries are added for all users. In GNOME only for the current user.
+On Microscoft Windows, the administrator rights are required to add the 
+entry for all users, otherwise the entries will be added only for the 
+current user. In GNOME only for the current user.
 
 Also, be aware that, uninstalling the package does not
 remove the context menu entries. If you are left with the context menu
