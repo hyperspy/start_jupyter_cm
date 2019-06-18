@@ -101,6 +101,7 @@ def _add_jupyter_here(all_users):
         install_type = "single user"
 
     for env in ('qtconsole', 'notebook', 'lab'):
+        environment_name = ""
         if "WINPYDIR" in os.environ:
             # Calling from WinPython
             # Paths are relative, so we have to set the env first
@@ -108,6 +109,19 @@ def _add_jupyter_here(all_users):
                                   WPSCRIPTS_FOLDER,
                                   "env.bat")
             script += " & jupyter-%s" % env
+        elif "CONDA_EXE" in os.environ:
+            # Calling from a conda environment, call activation script before
+            # executing script.
+            script = '%windir%\system32\cmd.exe "/K" '
+            script += os.path.join(os.path.split(os.environ["CONDA_EXE"])[0],
+                                  "activate.bat")
+            if ("CONDA_DEFAULT_ENV" in os.environ and 
+                os.environ["CONDA_DEFAULT_ENV"] != "base"):
+                # Add environment name if necessary
+                environment_name = os.environ["CONDA_DEFAULT_ENV"]
+                script += " " + environment_name
+                environment_name = " (%s)"%environment_name
+            script += " & jupyter-%s.exe" % env
         else:
             script = os.path.join(
                 sys.prefix, 'Scripts', "jupyter-%s.exe" % env)
@@ -124,8 +138,8 @@ def _add_jupyter_here(all_users):
             "",
             0,
             winreg.REG_SZ,
-            "Jupyter %s here" %
-            env)
+            "Jupyter %s here%s" %(
+                    env, environment_name))
         winreg.SetValueEx(
             key,
             'Icon',
@@ -154,8 +168,8 @@ def _add_jupyter_here(all_users):
             "",
             0,
             winreg.REG_SZ,
-            "Jupyter %s here" %
-            env)
+            "Jupyter %s here%s" %(
+                    env, environment_name))
         winreg.SetValueEx(
             key,
             'Icon',
