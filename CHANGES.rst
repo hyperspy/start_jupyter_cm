@@ -10,8 +10,7 @@
 
 1.1.2
 -----
-* Add global variable start_jupyter_cm.windows.WPSCRIPTS_FOLDER to define
-the WinPython scripts folder.
+* Add global variable start_jupyter_cm.windows.WPSCRIPTS_FOLDER to define the WinPython scripts folder.
 
 1.1.0
 -----
