@@ -1,6 +1,6 @@
 import os
 
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 
 if os.name == "nt":
     from start_jupyter_cm.windows import (add_jupyter_here,
