@@ -25,7 +25,11 @@ except ImportError:
     # Python 2
     import _winreg as winreg
 
+from .utils import get_environment_label
+
+
 WPSCRIPTS_FOLDER = "Scripts"
+CONDA_ENV_LABEL = get_environment_label()
 
 
 def add_jupyter_here():
@@ -101,7 +105,6 @@ def _add_jupyter_here(all_users):
         install_type = "single user"
 
     for env in ('qtconsole', 'notebook', 'lab'):
-        environment_name = ""
         if "WINPYDIR" in os.environ:
             # Calling from WinPython
             # Paths are relative, so we have to set the env first
@@ -115,12 +118,8 @@ def _add_jupyter_here(all_users):
             script = '%windir%\system32\cmd.exe "/K" '
             script += os.path.join(os.path.split(os.environ["CONDA_EXE"])[0],
                                   "activate.bat")
-            if ("CONDA_DEFAULT_ENV" in os.environ and 
-                os.environ["CONDA_DEFAULT_ENV"] != "base"):
-                # Add environment name if necessary
-                environment_name = os.environ["CONDA_DEFAULT_ENV"]
-                script += " " + environment_name
-                environment_name = " (%s)"%environment_name
+            if CONDA_ENV_LABEL != "":
+                script += " " + os.environ["CONDA_DEFAULT_ENV"]
             script += " & jupyter-%s.exe" % env
         else:
             script = os.path.join(
@@ -139,7 +138,7 @@ def _add_jupyter_here(all_users):
             0,
             winreg.REG_SZ,
             "Jupyter %s here%s" %(
-                    env, environment_name))
+                    env, CONDA_ENV_LABEL))
         winreg.SetValueEx(
             key,
             'Icon',
@@ -169,7 +168,7 @@ def _add_jupyter_here(all_users):
             0,
             winreg.REG_SZ,
             "Jupyter %s here%s" %(
-                    env, environment_name))
+                    env, CONDA_ENV_LABEL))
         winreg.SetValueEx(
             key,
             'Icon',
