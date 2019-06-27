@@ -1,6 +1,7 @@
 import os, sys
 import stat
 from subprocess import call
+import shutil
 
 NPATH = os.path.expanduser("~/.local/share/nautilus")
 SPATH = os.path.join(NPATH, "scripts")
@@ -40,7 +41,8 @@ def add_jupyter_here():
              'lab': os.path.join(logo_path, 'jupyter.png')}
     for terminal in ["qtconsole", "notebook", "lab"]:
         script_path = os.path.join(SPATH, "Jupyter %s here" % terminal)
-        if not os.path.exists(script_path):
+        if (not os.path.exists(script_path) and
+            shutil.which("jupyter-%s" % terminal)):
             with open(script_path, "w") as f:
                 f.write(script % (PATH, terminal, PATH, terminal))
             st = os.stat(script_path)
