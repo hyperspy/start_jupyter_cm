@@ -1,3 +1,7 @@
+1.3.1
+-----
+* Tidy up setup scripts to fix conda-forge build on windows
+
 1.3.0
 -----
 * Add support for single user installation on windows.
