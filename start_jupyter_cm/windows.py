@@ -19,13 +19,14 @@
 
 import os
 import sys
-try:
-    import winreg
-except ImportError:
-    # Python 2
-    import _winreg as winreg
+import shutil
+import winreg
+
+from .utils import get_environment_label
+
 
 WPSCRIPTS_FOLDER = "Scripts"
+CONDA_ENV_LABEL = get_environment_label()
 
 
 def add_jupyter_here():
@@ -56,26 +57,26 @@ def _remove_jupyter_here(all_users):
         h_key_base = winreg.HKEY_CURRENT_USER
         install_type = "single user"
 
-    for env in ('qtconsole', 'notebook', 'lab'):
+    for terminal in ('qtconsole', 'notebook', 'lab'):
         try:
             winreg.DeleteKey(
                 h_key_base,
-                r'Software\Classes\Directory\shell\jupyter_%s_here\Command' %
-                env)
+                r'Software\Classes\Directory\shell\jupyter_%s_here%s\Command' % (
+                terminal, CONDA_ENV_LABEL.replace(" ", "_")))
             winreg.DeleteKey(
                 h_key_base,
-                r'Software\Classes\Directory\shell\jupyter_%s_here' %
-                env)
+                r'Software\Classes\Directory\shell\jupyter_%s_here%s' % (
+                terminal, CONDA_ENV_LABEL.replace(" ", "_")))
             winreg.DeleteKey(
                 h_key_base,
-                r'Software\Classes\Directory\Background\shell\jupyter_%s_here\Command' %
-                env)
+                r'Software\Classes\Directory\Background\shell\jupyter_%s_here%s\Command' % (
+                terminal, CONDA_ENV_LABEL.replace(" ", "_")))
             winreg.DeleteKey(
                 h_key_base,
-                r'Software\Classes\Directory\Background\shell\jupyter_%s_here' %
-                env)
-            print("Jupyter %s here context menu entry removed for %s." % (
-                    env, install_type))
+                r'Software\Classes\Directory\Background\shell\jupyter_%s_here%s' % (
+                terminal, CONDA_ENV_LABEL.replace(" ", "_")))
+            print("Jupyter %s here%s context menu entry removed for %s." % (
+                    terminal, CONDA_ENV_LABEL, install_type))
         except FileNotFoundError:
             # If this fails it is because it was not installed, so nothing to
             # worry about.
@@ -100,90 +101,84 @@ def _add_jupyter_here(all_users):
         h_key_base = winreg.HKEY_CURRENT_USER
         install_type = "single user"
 
-    for env in ('qtconsole', 'notebook', 'lab'):
-        environment_name = ""
-        if "WINPYDIR" in os.environ:
-            # Calling from WinPython
-            # Paths are relative, so we have to set the env first
-            script = os.path.join(os.environ["WINPYDIR"], "..",
-                                  WPSCRIPTS_FOLDER,
-                                  "env.bat")
-            script += " & jupyter-%s" % env
-        elif "CONDA_EXE" in os.environ:
-            # Calling from a conda environment, call activation script before
-            # executing script.
-            script = '%windir%\system32\cmd.exe "/K" '
-            script += os.path.join(os.path.split(os.environ["CONDA_EXE"])[0],
-                                  "activate.bat")
-            if ("CONDA_DEFAULT_ENV" in os.environ and 
-                os.environ["CONDA_DEFAULT_ENV"] != "base"):
-                # Add environment name if necessary
-                environment_name = os.environ["CONDA_DEFAULT_ENV"]
-                script += " " + environment_name
-                environment_name = " (%s)"%environment_name
-            script += " & jupyter-%s.exe" % env
-        else:
-            script = os.path.join(
-                sys.prefix, 'Scripts', "jupyter-%s.exe" % env)
+    for terminal in ('qtconsole', 'notebook', 'lab'):
+        if shutil.which("jupyter-%s" % terminal):
+            if "WINPYDIR" in os.environ:
+                # Calling from WinPython
+                # Paths are relative, so we have to set the env first
+                script = os.path.join(os.environ["WINPYDIR"], "..",
+                                      WPSCRIPTS_FOLDER,
+                                      "env.bat")
+                script += " & jupyter-%s" % terminal
+            elif "CONDA_EXE" in os.environ:
+                # Calling from a conda environment, call activation script
+                # before executing script.
+                script = '%windir%\system32\cmd.exe "/K" '
+                script += os.path.join(
+                        os.path.split(os.environ["CONDA_EXE"])[0], "activate.bat")
+                if CONDA_ENV_LABEL != "":
+                    script += " " + os.environ["CONDA_DEFAULT_ENV"]
+                script += " & jupyter-%s.exe" % terminal
+            else:
+                script = os.path.join(
+                    sys.prefix, 'Scripts', "jupyter-%s.exe" % terminal)
+    
+            shell_script = script + ' --notebook-dir "%1"' if \
+                    terminal == "notebook" else script
+    
+            key = winreg.CreateKey(
+                h_key_base,
+                r'Software\Classes\Directory\shell\jupyter_%s_here%s' % (
+                terminal, CONDA_ENV_LABEL.replace(" ", "_")))
+            winreg.SetValueEx(
+                key,
+                "",
+                0,
+                winreg.REG_SZ,
+                "Jupyter %s here%s" % (terminal, CONDA_ENV_LABEL))
+            winreg.SetValueEx(
+                key,
+                'Icon',
+                0,
+                winreg.REG_SZ,
+                logos[terminal]
+            )
+            key.Close()
+            key = winreg.CreateKey(
+                h_key_base,
+                r'Software\Classes\Directory\shell\jupyter_%s_here%s\Command' % (
+                terminal, CONDA_ENV_LABEL.replace(" ", "_")))
+            winreg.SetValueEx(
+                key,
+                "",
+                0,
+                winreg.REG_EXPAND_SZ,
+                shell_script)
+            key.Close()
+            key = winreg.CreateKey(
+                h_key_base,
+                r'Software\Classes\Directory\Background\shell\jupyter_%s_here%s' % (
+                terminal, CONDA_ENV_LABEL.replace(" ", "_")))
+            winreg.SetValueEx(
+                key,
+                "",
+                0,
+                winreg.REG_SZ,
+                "Jupyter %s here%s" % (terminal, CONDA_ENV_LABEL))
+            winreg.SetValueEx(
+                key,
+                'Icon',
+                0,
+                winreg.REG_SZ,
+                logos[terminal]
+            )
+            key.Close()
+            key = winreg.CreateKey(
+                h_key_base,
+                r'Software\Classes\Directory\Background\shell\jupyter_%s_here%s\Command' % (
+                terminal, CONDA_ENV_LABEL.replace(" ", "_")))
+            winreg.SetValueEx(key, "", 0, winreg.REG_EXPAND_SZ, script)
+            key.Close()
 
-        shell_script = script + ' --notebook-dir "%1"' if env == "notebook"\
-            else script
-
-        key = winreg.CreateKey(
-            h_key_base,
-            r'Software\Classes\Directory\shell\jupyter_%s_here' %
-            env)
-        winreg.SetValueEx(
-            key,
-            "",
-            0,
-            winreg.REG_SZ,
-            "Jupyter %s here%s" %(
-                    env, environment_name))
-        winreg.SetValueEx(
-            key,
-            'Icon',
-            0,
-            winreg.REG_SZ,
-            logos[env]
-        )
-        key.Close()
-        key = winreg.CreateKey(
-            h_key_base,
-            r'Software\Classes\Directory\shell\jupyter_%s_here\Command' %
-            env)
-        winreg.SetValueEx(
-            key,
-            "",
-            0,
-            winreg.REG_EXPAND_SZ,
-            shell_script)
-        key.Close()
-        key = winreg.CreateKey(
-            h_key_base,
-            r'Software\Classes\Directory\Background\shell\jupyter_%s_here' %
-            env)
-        winreg.SetValueEx(
-            key,
-            "",
-            0,
-            winreg.REG_SZ,
-            "Jupyter %s here%s" %(
-                    env, environment_name))
-        winreg.SetValueEx(
-            key,
-            'Icon',
-            0,
-            winreg.REG_SZ,
-            logos[env]
-        )
-        key.Close()
-        key = winreg.CreateKey(
-            h_key_base,
-            r'Software\Classes\Directory\Background\shell\jupyter_%s_here\Command' %
-            env)
-        winreg.SetValueEx(key, "", 0, winreg.REG_EXPAND_SZ, script)
-        key.Close()
-
-        print("Jupyter %s here context menu entry created for %s." % (
-                env, install_type))
+            print("Jupyter %s here%s context menu entry created for %s." % (
+                    terminal, CONDA_ENV_LABEL, install_type))
