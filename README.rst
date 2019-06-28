@@ -21,6 +21,8 @@ in a folder. Currently it only supports Microsoft Windows and GNOME (and
 its many derivatives). Contributions to support other OSs/desktop
 environments are highly welcome.
 
+`WinPython <http://winpython.github.io>`__ and `Anaconda <https://www.anaconda.com/distribution>`__/`Miniconda <https://docs.conda.io/en/latest/miniconda.html>`__ distributions are supported. If run from a conda environment other than `root`, the name of the environment will be specified in brackets in the context menu name. 
+
 Microsoft Windows
 ~~~~~~~~~~~~~~~~~
 
@@ -61,11 +63,17 @@ Installation instructions
 Any platform
 ~~~~~~~~~~~~
 
-Install from pypi using pip e.g.:
+Install from pypi using pip:
 
 .. code:: bash
 
     $ pip install start_jupyter_cm
+
+Or install from conda-forge channel using conda (in a Anaconda/Miniconda distribution):
+
+.. code:: bash
+
+    $ conda install -c conda-forge start_jupyter_cm
 
 After installation, enable the context menu entries from a terminal as follows:
 
@@ -82,7 +90,6 @@ To remove the context menu entries execute the following in a terminal:
 To uninstall the package:
 
 .. code:: bash
-
 
     $ pip uninstall start_jupyter_cm
 
