@@ -1,6 +1,17 @@
 start\_jupyter\_cm
 ==================
 
+|pypi_version|_  |python_version|_ |conda|_
+
+.. |pypi_version| image:: https://img.shields.io/pypi/v/start-jupyter-cm.svg?style=flat
+.. _pypi_version: https://pypi.python.org/pypi/start-jupyter-cm
+
+.. |python_version| image:: https://img.shields.io/pypi/pyversions/start-jupyter-cm.svg?style=flat
+.. _python_version: https://pypi.python.org/pypi/start-jupyter-cm
+
+.. |conda| image:: https://img.shields.io/conda/pn/conda-forge/start_jupyter_cm.svg?style=flat
+.. _conda: https://anaconda.org/conda-forge/start_jupyter_cm
+
 Description
 -----------
 

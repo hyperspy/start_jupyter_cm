@@ -20,11 +20,7 @@
 import os
 import sys
 import shutil
-try:
-    import winreg
-except ImportError:
-    # Python 2
-    import _winreg as winreg
+import winreg
 
 from .utils import get_environment_label
 
@@ -183,6 +179,6 @@ def _add_jupyter_here(all_users):
                 terminal, CONDA_ENV_LABEL.replace(" ", "_")))
             winreg.SetValueEx(key, "", 0, winreg.REG_EXPAND_SZ, script)
             key.Close()
-    
+
             print("Jupyter %s here%s context menu entry created for %s." % (
                     terminal, CONDA_ENV_LABEL, install_type))
