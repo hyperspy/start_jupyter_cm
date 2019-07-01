@@ -2,6 +2,7 @@
 -----
 * Merge installation and removal command into one single commands
   ``start_jupyter_cm`` that takes a ``--remove`` argument.
+* Add test suite and continuous integration in travis and appveyor.
 
 1.4.0
 -----

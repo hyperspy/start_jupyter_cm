@@ -26,8 +26,8 @@ build: off
 test_script:
   # Run with reduced privilege
   - 'pytest --pyargs start_jupyter_cm'
-  - 'jupyter_context-menu_add'
-  - 'jupyter_context-menu_remove'
+  - 'start_jupyter_cm'
+  - 'start_jupyter_cm --remove'
 
 after_test:
   - 'python setup.py sdist bdist_wheel'

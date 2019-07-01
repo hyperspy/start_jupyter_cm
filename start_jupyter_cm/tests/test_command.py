@@ -21,9 +21,11 @@ def isadmin():
 
 @pytest.mark.parametrize("action", ['add', 'remove'])
 def test_run_command(action):
+    call = ["start_jupyter_cm"]
+    if action == 'remove':
+        call.append("--remove")
     # https://stackoverflow.com/questions/53209127/subprocess-unexpected-keyword-argument-capture-output
-    output = subprocess.run(["jupyter_context-menu_%s" % action],
-                            stdout=PIPE, stderr=PIPE)
+    output = subprocess.run(call, stdout=PIPE, stderr=PIPE)
     assert output.returncode == 0
     env_label = get_environment_label()
     if sys.platform.startswith("linux"):
