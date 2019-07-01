@@ -16,7 +16,7 @@ matrix:
 
 before_install:
   - |
-    if [ $CONDA = true ]; then
+    if [ $CONDA ]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
       chmod +x miniconda.sh
       ./miniconda.sh -b -p $HOME/miniconda
@@ -24,7 +24,7 @@ before_install:
     fi
 install:
   - |
-    if [ $CONDA = true ]; then
+    if [ $CONDA ]; then
       source $HOME/miniconda/bin/activate root
       conda update -yq conda
       conda create -n testenv --yes python=$PYTHON_VERSION
