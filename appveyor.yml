@@ -2,7 +2,7 @@
 environment:
 
   global:
-    TEST_DEPS: qtconsole notebook pytest
+    TEST_DEPS: qtconsole notebook pytest wheel
 
   matrix:
     - CONDA: true
