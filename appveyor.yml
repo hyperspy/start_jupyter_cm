@@ -2,28 +2,31 @@
 environment:
 
   global:
-    TEST_DEPS: "qtconsole notebook pytest"
+    TEST_DEPS: qtconsole notebook pytest
 
   matrix:
     - PYTHON_VERSION: 3.7
       CONDA: true
-      PYTHON: "C:\\Python37"
+      PYTHON: C:\\Python37
     - PYTHON_VERSION: 3.7
       CONDA: false
-      PYTHON: "C:\\Python37"
+      PYTHON: C:\\Python37
 
 # scripts that run after cloning repository
 install:
-  - if "%CONDA%" == true (
-      set PATH=C:\Miniconda37-x64;C:\Miniconda37-x64\Scripts;"%PATH%"
-      C:\\Miniconda37-x64\\Scripts\\activate.bat 
-      conda update -yq conda
-      conda create -y -n testenv python=%PYTHON_VERSION%
-      activate testenv
-    ) else (
-      set PATH=%PYTHON%;%PYTHON%\\Scripts;"%PATH%"
-      pip install %TEST_DEPS%
-    )
+  - ps: |
+      if ($env:CONDA -eq "true") {
+        $env:PATH="C:\\Miniconda37-x64;C:\\Miniconda37-x64\\Scripts;$env:PATH"
+        C:\\Miniconda37-x64\\Scripts\\activate.bat
+        conda update -yq conda
+        conda create -y -n testenv python=%env:PYTHON_VERSION
+        conda install qtconsole notebook pytest
+        activate testenv
+      } else {
+      $env:PATH="$env:PYTHON;$env:PYTHON\\Scripts;c:\python37\Scripts;$env:PATH"
+      python -m pip install --upgrade pip
+      pip install qtconsole notebook pytest
+      }
 
   # Install our package
   - 'pip install -e .'
