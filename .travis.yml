@@ -7,8 +7,10 @@ env:
 matrix:
   include:
   - env: export PYTHON_VERSION=3.7
+    python: 3.7
   - env: export PYTHON_VERSION=3.7; CONDA=true
   - env: export PYTHON_VERSION=3.6
+    python: 3.6
   - env: export PYTHON_VERSION=3.6; CONDA=true
 
 

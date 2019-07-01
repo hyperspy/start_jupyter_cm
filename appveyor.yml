@@ -20,7 +20,6 @@ install:
       conda update -yq conda
       conda create -y -n testenv python=%PYTHON_VERSION%
       activate testenv
-      pip install -e .
     ) else (
       'SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%'
       pip install %TEST_DEPS%
