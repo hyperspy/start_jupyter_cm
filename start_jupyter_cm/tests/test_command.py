@@ -8,6 +8,17 @@ from start_jupyter_cm.utils import get_environment_label
 from start_jupyter_cm.gnome import SPATH
 
 
+def isadmin():
+    try:
+        # only windows users with admin privileges can read the C:\windows\temp
+        os.listdir(os.path.join([os.environ.get('SystemRoot', 'C:\\windows'),
+                                 'temp']))
+        return True
+    except:
+        # We don't have admin right
+        return False
+
+
 @pytest.mark.parametrize("action", ['add', 'remove'])
 def test_run_command(action):
     # https://stackoverflow.com/questions/53209127/subprocess-unexpected-keyword-argument-capture-output
@@ -24,31 +35,36 @@ def test_run_command(action):
                 assert script_exist
             else:
                 assert not script_exist
+        output_string_list = output.stdout.decode().splitlines()
+        print(output_string_list)
+        # If running from a conda environment, it should have the name of the
+        # environemnt in brackend if not running from base environment
+        out = "created" if action == "add" else "removed"
+        expected_out = ['Jupyter qtconsole here%s %s.' % (env_label, out),
+                        'Jupyter notebook here%s %s.' % (env_label, out),
+                        ]
+        if env_label != "":
+            expected_out.insert(0, "Using conda environment: %s" %
+                                os.environ["CONDA_DEFAULT_ENV"])
+        assert output_string_list == expected_out
+
     elif sys.platform == "win32":
         import winreg
-        h_key_base = winreg.HKEY_CURRENT_USER
+        if isadmin:
+            h_key_base = winreg.HKEY_LOCAL_MACHINE
+        else:
+            h_key_base = winreg.HKEY_CURRENT_USER
         for terminal in ["qtconsole", "notebook"]:
             key = r'Software\Classes\Directory\shell\jupyter_%s_here%s\Command' % (
                 terminal, env_label.replace(" ", "_"))
             if action == "add":
                 # Check if we can open the key to test if the key is present.
-                winreg.OpenKey(h_key_base, key)
-                winreg.CloseKey(h_key_base, key)
+                registry_key = winreg.OpenKey(h_key_base, key)
+                winreg.CloseKey(registry_key)
             else:
                 with pytest.raises(FileNotFoundError):
                     # If the key have been properly removed, we will expect
                     # a `FileNotFoundError` to be raised
                     winreg.OpenKey(h_key_base, key)
 
-    output_string_list = output.stdout.decode().splitlines()
-    print(output_string_list)
-    # If running from a conda environment, it should have the name of the
-    # environemnt in brackend if not running from base environment
-    out = "created" if action == "add" else "removed"
-    expected_out = ['Jupyter qtconsole here%s %s.' % (env_label, out),
-                    'Jupyter notebook here%s %s.' % (env_label, out),
-                    ]
-    if env_label != "":
-        expected_out.insert(0, "Using conda environment: %s" %
-                            os.environ["CONDA_DEFAULT_ENV"])
-    assert output_string_list == expected_out
+
