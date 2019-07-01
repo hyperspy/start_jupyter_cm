@@ -2,6 +2,7 @@ import subprocess
 import os
 import sys
 import pytest
+from subprocess import PIPE
 
 from start_jupyter_cm.utils import get_environment_label
 from start_jupyter_cm.gnome import SPATH
@@ -9,8 +10,9 @@ from start_jupyter_cm.gnome import SPATH
 
 @pytest.mark.parametrize("action", ['add', 'remove'])
 def test_run_command(action):
+    # https://stackoverflow.com/questions/53209127/subprocess-unexpected-keyword-argument-capture-output
     output = subprocess.run(["jupyter_context-menu_%s" % action],
-                            capture_output=True)
+                            stdout=PIPE, stderr=PIPE)
     assert output.returncode == 0
     env_label = get_environment_label()
     if sys.platform.startswith("linux"):
