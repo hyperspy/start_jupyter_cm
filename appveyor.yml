@@ -15,13 +15,13 @@ environment:
 # scripts that run after cloning repository
 install:
   - if "%CONDA%" == true (
-      set PATH=C:\Miniconda37-x64;C:\Miniconda37-x64\Scripts;%PATH%
+      set PATH=C:\Miniconda37-x64;C:\Miniconda37-x64\Scripts;"%PATH%"
       C:\\Miniconda37-x64\\Scripts\\activate.bat 
       conda update -yq conda
       conda create -y -n testenv python=%PYTHON_VERSION%
       activate testenv
     ) else (
-      'SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%'
+      set PATH=%PYTHON%;%PYTHON%\\Scripts;"%PATH%"
       pip install %TEST_DEPS%
     )
 
