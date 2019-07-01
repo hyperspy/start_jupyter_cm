@@ -30,14 +30,13 @@ here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
-install_req = ['jupyter', 'qtconsole', ]
 
 setup(
     name="start_jupyter_cm",
     package_dir={'start_jupyter_cm': 'start_jupyter_cm'},
     version=start_jupyter_cm.__version__,
     packages=['start_jupyter_cm', ],
-    requires=install_req,
+    requires=[],
     package_data={'start_jupyter_cm': ['scripts/*.py',
                                        'icons/*.ico',
                                        'icons/*.png',
