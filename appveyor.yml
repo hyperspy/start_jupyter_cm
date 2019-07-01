@@ -18,6 +18,7 @@ install:
         conda update -yq conda
         conda create -y -n testenv python
         activate testenv
+	conda info -a
         conda install qtconsole notebook pytest
       } else {
       $env:PATH="$env:PYTHON;$env:PYTHON\\Scripts;c:\python37\Scripts;$env:PATH"
