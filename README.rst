@@ -79,13 +79,13 @@ After installation, enable the context menu entries from a terminal as follows:
 
 .. code:: bash
 
-    $ jupyter_context-menu_add
+    $ start_jupyter_cm
 
 To remove the context menu entries execute the following in a terminal:
 
 .. code::
 
-    $ jupyter_context-menu_remove
+    $ start_jupyter_cm --remove
 
 To uninstall the package:
 
