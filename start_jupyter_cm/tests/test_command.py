@@ -2,7 +2,6 @@ import subprocess
 import os
 import sys
 import pytest
-import winreg
 
 from start_jupyter_cm.utils import get_environment_label
 from start_jupyter_cm.gnome import SPATH
@@ -24,6 +23,7 @@ def test_run_command(action):
             else:
                 assert not script_exist
     elif sys.platform == "win32":
+        import winreg
         h_key_base = winreg.HKEY_CURRENT_USER
         for terminal in ["qtconsole", "notebook"]:
             key = r'Software\Classes\Directory\shell\jupyter_%s_here%s\Command' % (
