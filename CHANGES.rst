@@ -1,3 +1,8 @@
+2.0.0
+-----
+* Merge installation and removal command into one single commands
+  ``start_jupyter_cm`` that takes a ``--remove`` argument.
+
 1.4.0
 -----
 * Add support for conda environment on linux.
