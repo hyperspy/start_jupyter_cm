@@ -1,0 +1,38 @@
+language: python
+
+env:
+  global:
+    - TEST_DEPS="qtconsole notebook pytest"
+
+matrix:
+  include:
+  - env: export PYTHON_VERSION=3.7
+  - env: export PYTHON_VERSION=3.7; CONDA=true
+  - env: export PYTHON_VERSION=3.6
+  - env: export PYTHON_VERSION=3.6; CONDA=true
+
+
+before_install:
+  - |
+    if [ $CONDA = true ]; then
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+      chmod +x miniconda.sh
+      ./miniconda.sh -b -p $HOME/miniconda
+      hash -r
+    fi
+install:
+  - |
+    if [ $CONDA = true ]; then
+      source $HOME/miniconda/bin/activate root
+      conda update -yq conda
+      conda create -n testenv --yes python=$PYTHON_VERSION
+      source activate testenv
+      conda install -y $TEST_DEPS
+    else
+      pip install $TEST_DEPS
+    fi
+
+  - pip install -e .
+
+script:
+  - pytest --pyargs start_jupyter_cm;
