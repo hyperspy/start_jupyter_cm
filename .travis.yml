@@ -20,6 +20,7 @@ matrix:
 
 
 before_install:
+  - mkdir -p ~/.local/share/nautilus/scripts/
   - |
     if [ $CONDA ]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
@@ -27,8 +28,6 @@ before_install:
       ./miniconda.sh -b -p $HOME/miniconda
       hash -r
     fi
-  - gnome-shell &
-  - sleep 3 # give gnome-shell some time to start
 
 install:
   - |
@@ -45,4 +44,7 @@ install:
   - pip install -e .
 
 script:
-  - pytest --pyargs start_jupyter_cm;
+  - pytest --pyargs start_jupyter_cm
+  - jupyter_context-menu_add
+  - ls ~/.local/share/nautilus/scripts
+  - jupyter_context-menu_remove
