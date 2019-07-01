@@ -1,5 +1,10 @@
 language: python
 
+addons:
+  apt:
+    packages:
+    - nautilus
+
 env:
   global:
     - TEST_DEPS="qtconsole notebook pytest"
@@ -22,6 +27,9 @@ before_install:
       ./miniconda.sh -b -p $HOME/miniconda
       hash -r
     fi
+  - gnome-shell &
+  - sleep 3 # give gnome-shell some time to start
+
 install:
   - |
     if [ $CONDA ]; then
