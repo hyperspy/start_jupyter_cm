@@ -1,0 +1,42 @@
+# environment variables
+environment:
+
+  global:
+    TEST_DEPS: "qtconsole notebook pytest"
+
+  matrix:
+    - PYTHON_VERSION: 3.7
+      CONDA: true
+      PYTHON: "C:\\Python37"
+    - PYTHON_VERSION: 3.7
+      CONDA: false
+      PYTHON: "C:\\Python37"
+
+# scripts that run after cloning repository
+install:
+  - if "%CONDA%" == true (
+      set PATH=C:\Miniconda37-x64;C:\Miniconda37-x64\Scripts;%PATH%
+      C:\\Miniconda37-x64\\Scripts\\activate.bat 
+      conda update -yq conda
+      conda create -y -n testenv python=%PYTHON_VERSION%
+      activate testenv
+      pip install -e .
+    ) else (
+      SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+      pip install %TEST_DEPS%
+    )
+
+  # Install our package
+  - 'pip install -e .'
+
+build: off
+
+test_script:
+  - 'pytest --pyargs start_jupyter_cm'
+
+after_test:
+  - 'python setup.py sdist bdist_wheel'
+
+artifacts:
+  - path: dist\*
+
