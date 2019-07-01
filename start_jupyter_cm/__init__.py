@@ -1,18 +1,8 @@
 import os
+import argparse
 
-__version__ = "1.4.1.dev"
-
-if os.name == "nt":
-    from start_jupyter_cm.windows import (add_jupyter_here,
-                                          remove_jupyter_here)
-else:
-    from start_jupyter_cm.gnome import (add_jupyter_here,
-                                        remove_jupyter_here)
+__version__ = "2.0.dev"
 
 
-def _add():
-    add_jupyter_here()
 
-
-def _remove():
-    remove_jupyter_here()
+    

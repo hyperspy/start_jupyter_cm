@@ -67,7 +67,6 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'jupyter_context-menu_add = start_jupyter_cm:_add',
-            'jupyter_context-menu_remove = start_jupyter_cm:_remove',
+            'start_jupyter_cm = start_jupyter_cm.command:_run',
         ], }
 )
