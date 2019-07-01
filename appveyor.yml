@@ -3,28 +3,20 @@ environment:
 
   global:
     TEST_DEPS: qtconsole notebook pytest
-    PYTHON: C:\\Python37
 
   matrix:
     - CONDA: true
+      PYTHON_PATH: C:\\Miniconda37-x64
     - CONDA: false
+      PYTHON_PATH: C:\\Python37
 
 # scripts that run after cloning repository
 install:
-  - ps: |
-      if ($env:CONDA -eq "true") {
-        $env:PATH="C:\\Miniconda37-x64;C:\\Miniconda37-x64\\Scripts;$env:PATH"
-        C:\\Miniconda37-x64\\Scripts\\activate.bat
-        conda update -yq conda
-        conda create -y -n testenv python
-        activate testenv
-	conda info -a
-        conda install qtconsole notebook pytest
-      } else {
-      $env:PATH="$env:PYTHON;$env:PYTHON\\Scripts;c:\python37\Scripts;$env:PATH"
-      python -m pip install --upgrade pip
-      pip install qtconsole notebook pytest
-      }
+  - SET PATH=%PYTHON_PATH%;%PYTHON_PATH%\Scripts;%PATH%
+  - if "%CONDA%" == "true" conda create -y -n testenv
+  - if "%CONDA%" == "true" activate testenv
+  - if "%CONDA%" == "true" conda install -y %TEST_DEPS%
+  - if "%CONDA%" == "false" pip install qtconsole notebook pytest
 
   # Install our package
   - 'pip install -e .'
@@ -33,6 +25,8 @@ build: off
 
 test_script:
   - 'pytest --pyargs start_jupyter_cm'
+  - 'jupyter_context-menu_add'
+  - 'jupyter_context-menu_remove'
 
 after_test:
   - 'python setup.py sdist bdist_wheel'

@@ -40,7 +40,7 @@ def test_run_command(action):
                     # a `FileNotFoundError` to be raised
                     winreg.OpenKey(h_key_base, key)
 
-    output_string_list = output.stdout.decode().split("\n")[:-1]
+    output_string_list = output.stdout.decode().splitlines()
     print(output_string_list)
     # If running from a conda environment, it should have the name of the
     # environemnt in brackend if not running from base environment
