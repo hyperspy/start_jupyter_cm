@@ -22,7 +22,7 @@ install:
       activate testenv
       pip install -e .
     ) else (
-      SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+      'SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%'
       pip install %TEST_DEPS%
     )
 
