@@ -12,7 +12,7 @@ environment:
 
 # scripts that run after cloning repository
 install:
-  - SET PATH=%PYTHON_PATH%;%PYTHON_PATH%\Scripts;%PATH%
+  - SET PATH=%PYTHON_PATH%;%PYTHON_PATH%\\Scripts;%PATH%
   - if "%CONDA%" == "true" conda create -y -n testenv
   - if "%CONDA%" == "true" activate testenv
   - if "%CONDA%" == "true" conda install -y %TEST_DEPS%
@@ -24,7 +24,8 @@ install:
 build: off
 
 test_script:
-  - 'pytest --pyargs start_jupyter_cm'
+  # Run with reduced privilege
+  - 'psexec -l -d "%PYTHON_PATH%\\Scripts\\pytest"'
   - 'jupyter_context-menu_add'
   - 'jupyter_context-menu_remove'
 
