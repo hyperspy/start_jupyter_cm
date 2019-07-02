@@ -37,18 +37,6 @@ def test_run_command(action):
                 assert script_exist
             else:
                 assert not script_exist
-        output_string_list = output.stdout.decode().splitlines()
-        print(output_string_list)
-        # If running from a conda environment, it should have the name of the
-        # environemnt in brackend if not running from base environment
-        out = "created" if action == "add" else "removed"
-        expected_out = ['Jupyter qtconsole here%s %s.' % (env_label, out),
-                        'Jupyter notebook here%s %s.' % (env_label, out),
-                        ]
-        if env_label != "":
-            expected_out.insert(0, "Using conda environment: %s" %
-                                os.environ["CONDA_DEFAULT_ENV"])
-        assert output_string_list == expected_out
 
     elif sys.platform == "win32":
         import winreg
