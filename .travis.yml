@@ -49,6 +49,8 @@ script:
   - start_jupyter_cm
   - ls ~/.local/share/nautilus/scripts
   - start_jupyter_cm --remove
+
+after_failure:
   - gio --version
   - which gio
   - echo $PATH
