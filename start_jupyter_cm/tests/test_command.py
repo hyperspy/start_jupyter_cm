@@ -24,9 +24,16 @@ def test_run_command(action):
     call = ["start_jupyter_cm"]
     if action == 'remove':
         call.append("--remove")
-    # https://stackoverflow.com/questions/53209127/subprocess-unexpected-keyword-argument-capture-output
-    output = subprocess.run(call, stdout=PIPE, stderr=PIPE)
-    assert output.returncode == 0
+    try:
+        # https://stackoverflow.com/questions/53209127/subprocess-unexpected-keyword-argument-capture-output
+        subprocess.run(call, stdout=PIPE, stderr=PIPE, check=True)
+    except subprocess.CalledProcessError as err:
+        print("returncode", err.returncode)
+        print("cmd", err.cmd)
+        print("output", err.output)
+        print("stdout", err.stdout)
+        print("stderr", err.stderr)
+
     env_label = get_environment_label()
     if sys.platform.startswith("linux"):
         for terminal in ["qtconsole", "notebook"]:
