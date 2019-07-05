@@ -54,8 +54,10 @@ def add_jupyter_here():
                 f.write(script % (PATH, terminal, PATH, terminal))
             st = os.stat(script_path)
             os.chmod(script_path, st.st_mode | stat.S_IEXEC)
-            call(['gio', 'set', '-t', 'string', '%s' % script_path,
-                  'metadata::custom-icon', 'file://%s' % logos[terminal]])
+            if shutil.which("gio"):
+                # Call it only if available in the system
+                call(['gio', 'set', '-t', 'string', '%s' % script_path,
+                      'metadata::custom-icon', 'file://%s' % logos[terminal]])
             print('Jupyter %s here%s created.' % (terminal, CONDA_ENV_LABEL))
 
 
