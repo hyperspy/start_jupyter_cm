@@ -25,7 +25,7 @@ def test_run_command(action):
     if action == 'remove':
         call.append("--remove")
     # https://stackoverflow.com/questions/53209127/subprocess-unexpected-keyword-argument-capture-output
-    output = subprocess.run(call, stdout=PIPE, stderr=PIPE, shell=True)
+    output = subprocess.run(call, stdout=PIPE, stderr=PIPE)
     assert output.returncode == 0
     env_label = get_environment_label()
     if sys.platform.startswith("linux"):
