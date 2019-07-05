@@ -32,28 +32,12 @@ with open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 install_req = ['jupyter', 'qtconsole', ]
 
-
-def are_we_building4windows():
-    for arg in sys.argv:
-        if 'wininst' in arg:
-            return True
-
-scripts = []
-
-if are_we_building4windows() or os.name in ['nt', 'dos']:
-    # In the Windows command prompt we can't execute Python scripts
-    # without a .py extension. A solution is to create batch files
-    # that runs the different scripts.
-    # (code adapted from scitools)
-    scripts.extend(('scripts/win_post_installation.py',))
-
 setup(
     name="start_jupyter_cm",
     package_dir={'start_jupyter_cm': 'start_jupyter_cm'},
     version=start_jupyter_cm.__version__,
     packages=['start_jupyter_cm', ],
     requires=install_req,
-    scripts=scripts,
     package_data={'start_jupyter_cm': ['scripts/*.py',
                                        'icons/*.ico',
                                        'icons/*.png',
@@ -64,8 +48,12 @@ setup(
     license="BSDv3",
     url="https://github.com/hyperspy/start_jupyter_cm",
     classifiers=[
-        "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Development Status :: 4 - Beta",
         "Environment :: Console",
         "License :: OSI Approved :: BSD License",
@@ -79,7 +67,6 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'jupyter_context-menu_add = start_jupyter_cm:_add',
-            'jupyter_context-menu_remove = start_jupyter_cm:_remove',
+            'start_jupyter_cm = start_jupyter_cm.command:_run',
         ], }
 )
