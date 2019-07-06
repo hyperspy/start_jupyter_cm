@@ -60,3 +60,5 @@ target/
 *.swp
 # Vim ropeproject
 .ropeproject*
+# IDEA
+.idea

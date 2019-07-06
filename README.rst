@@ -57,7 +57,7 @@ QtConsole/notebook/lab opens in each of the selected folders. Selecting a
 file starts Jupyter in the file directory.
 
 Note that in GNOME and KDE, the processes run in the background. To shutdown
-the server, use either the `jupyter notebook stop <port>` command from the
+the server, use either the ``jupyter notebook stop <port>`` command from the
 terminal, or click the "Quit" button from the main Jupyter notebook home
 page.
 
