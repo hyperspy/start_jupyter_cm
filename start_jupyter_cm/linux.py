@@ -118,24 +118,25 @@ def add_jupyter_here():
         if not os.path.exists(KPATH):
             os.mkdir(KPATH)
         for terminal in ["qtconsole", "notebook", "lab"]:
-            script_path = os.path.join(KPATH, f"Jupyter_{terminal}_here"
-                                              f"{CONDA_ENV_LABEL}")
+            script_path = os.path.join(KPATH, "Jupyter_{}_here{}"
+                                              "".format(terminal,
+                                                        CONDA_ENV_LABEL))
             if (not os.path.exists(script_path)
-                    and shutil.which(f"jupyter-{terminal}")):
+                    and shutil.which("jupyter-{}".format(terminal))):
                 with open(script_path, "w") as f:
                     f.write(script % (PATH, terminal, PATH, terminal))
                 st = os.stat(script_path)
                 os.chmod(script_path, st.st_mode | stat.S_IEXEC)
 
-                print(f'  KDE: Jupyter {terminal} here{CONDA_ENV_LABEL} '
-                      f'script created.')
+                print("  KDE: Jupyter {} here{} script created."
+                      "".format(terminal, CONDA_ENV_LABEL))
 
             desktop_path = os.path.join(KPATH,
-                                        f"jupyter_{terminal}"
-                                        f"{CONDA_ENV_LABEL}.desktop")
+                                        "jupyter_{}{}.desktop"
+                                        "".format(terminal, CONDA_ENV_LABEL))
             if not os.path.exists(desktop_path):
-                print(f'  KDE: Jupyter {terminal} here{CONDA_ENV_LABEL} '
-                      f'desktop file created.')
+                print('  KDE: Jupyter {} here{} desktop file '
+                      'created.'.format(terminal, CONDA_ENV_LABEL))
                 with open(desktop_path, "w") as f:
                     f.write(get_desktop_file(terminal, logos[terminal]))
 
@@ -144,26 +145,26 @@ def remove_jupyter_here():
     for terminal in ["qtconsole", "notebook", "lab"]:
         if GNOME:
             script_path = os.path.join(SPATH,
-                                       f"Jupyter {terminal} "
-                                       f"here{CONDA_ENV_LABEL}")
+                                       "Jupyter {} here{}"
+                                       "".format(terminal, CONDA_ENV_LABEL))
             if os.path.exists(script_path):
                 os.remove(script_path)
-                print(f"Gnome: Jupyter {terminal} here{CONDA_ENV_LABEL} "
-                      f"removed.")
+                print("Gnome: Jupyter {} here{} removed."
+                      "".format(terminal, CONDA_ENV_LABEL))
 
         if KDE:
             script_path = os.path.join(KPATH,
-                                       f"Jupyter_{terminal}_here"
-                                       f"{CONDA_ENV_LABEL}")
+                                       "Jupyter_{}_here{}"
+                                       "".format(terminal, CONDA_ENV_LABEL))
             if os.path.exists(script_path):
                 os.remove(script_path)
-                print(f"  KDE: Jupyter {terminal} "
-                      f"here{CONDA_ENV_LABEL} removed.")
+                print("  KDE: Jupyter {} here{} removed."
+                      "".format(terminal, CONDA_ENV_LABEL))
 
             desktop_path = os.path.join(KPATH,
-                                        f"jupyter_{terminal}"
-                                        f"{CONDA_ENV_LABEL}.desktop")
+                                        "jupyter_{}{}.desktop"
+                                        "".format(terminal, CONDA_ENV_LABEL))
             if os.path.exists(desktop_path):
                 os.remove(desktop_path)
-                print(f"  KDE: jupyter_{terminal}{CONDA_ENV_LABEL}.desktop "
-                      f"removed.")
+                print("  KDE: jupyter_{}{}.desktop removed."
+                      "".format(terminal, CONDA_ENV_LABEL))
