@@ -1,7 +1,10 @@
 2.0.0
 -----
+The is a major release changing the API:
+
 * Merge installation and removal command into one single commands
   ``start_jupyter_cm`` that takes a ``--remove`` argument.
+* Drop python 3.3, 3.4 and 3.5 support.
 
 1.4.0
 -----
