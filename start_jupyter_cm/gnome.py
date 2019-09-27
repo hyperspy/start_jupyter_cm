@@ -52,16 +52,8 @@ def add_jupyter_here():
                 terminal, CONDA_ENV_LABEL))
         if (not os.path.exists(script_path) and
             shutil.which("jupyter-%s" % terminal)):
-            SYSPATH,filename = os.path.split(shutil.which("jupyter-%s" % terminal))
-            if (SYSPATH == PATH):
-                path_exec = PATH
-            else:
-                print("        NOTE: jupyter-%s lies outside env directory, using this path instead:" % terminal)
-                print("        %s" % SYSPATH)
-                path_exec = SYSPATH
- 
             with open(script_path, "w") as f:
-                f.write(script % (path_python, path_exec, terminal, path_exec, terminal))
+                f.write(script % (path_python, PATH, terminal, PATH, terminal))
             st = os.stat(script_path)
             os.chmod(script_path, st.st_mode | stat.S_IEXEC)
             call(['gio', 'set', '-t', 'string', '%s' % script_path,
