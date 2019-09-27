@@ -82,7 +82,7 @@ fi
 
 
 if [[ $current_file == *.ipynb ]] ; then
-    %s/jupyter-%s $current_file
+    %s/jupyter-%s "$current_file"
 else
     %s/jupyter-%s
 fi
