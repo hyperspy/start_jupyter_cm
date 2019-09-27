@@ -301,17 +301,10 @@ def add_jupyter_here():
             os.makedirs(script_dir)
             document_path = os.path.join(script_dir, "document.wflow")
             info_path = os.path.join(script_dir, "Info.plist")
-            SYSPATH,file = os.path.split(shutil.which("jupyter-%s" % terminal))
-            if (SYSPATH == PATH):
-                path_exec = PATH
-            else:
-                print("        NOTE: jupyter-%s lies outside env directory, using this path instead:" % terminal)
-                print("        %s" % SYSPATH)
-                path_exec = SYSPATH
             	
             if not os.path.exists(document_path):
                 with open(document_path, "w") as f:
-                    f.write(document % (path_exec, terminal, path_exec, terminal))
+                    f.write(document % (PATH, terminal, PATH, terminal))
             if not os.path.exists(info_path):
                 with open(info_path, "w") as f:
                     f.write(info % (terminal, CONDA_ENV_LABEL))
