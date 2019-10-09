@@ -41,6 +41,7 @@ setup(
     package_data={'start_jupyter_cm': ['scripts/*.py',
                                        'icons/*.ico',
                                        'icons/*.png',
+                                       'prototype.workflow/Contents/*',
                                        ]},
     author="The HyperSpy Developers",
     description="Add entries to start Jupyter from context menu.",
