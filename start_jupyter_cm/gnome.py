@@ -13,7 +13,7 @@ CONDA_ENV_LABEL = get_environment_label()
 
 
 script = \
-    """#!/usr/bin/python
+    """#!%s
 
 import sys
 import os.path
@@ -45,13 +45,15 @@ def add_jupyter_here():
              'notebook': os.path.join(logo_path, 'jupyter.png'),
              'lab': os.path.join(logo_path, 'jupyter.png')}
 
+    python_exec = shutil.which("python")
+
     for terminal in ["qtconsole", "notebook", "lab"]:
         script_path = os.path.join(SPATH, "Jupyter %s here%s" % (
                 terminal, CONDA_ENV_LABEL))
         if (not os.path.exists(script_path) and
             shutil.which("jupyter-%s" % terminal)):
             with open(script_path, "w") as f:
-                f.write(script % (PATH, terminal, PATH, terminal))
+                f.write(script % (python_exec, PATH, terminal, PATH, terminal))
             st = os.stat(script_path)
             os.chmod(script_path, st.st_mode | stat.S_IEXEC)
             call(['gio', 'set', '-t', 'string', '%s' % script_path,
