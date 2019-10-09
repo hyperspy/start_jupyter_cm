@@ -1,3 +1,10 @@
+2.1.0
+-----
+The is a minor release:
+
+* Add support for MacOSX.
+* Fix path to python for running scripts on gnome.
+
 2.0.0
 -----
 The is a major release changing the API:
