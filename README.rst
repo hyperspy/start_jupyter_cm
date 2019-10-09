@@ -69,7 +69,7 @@ selected in Finder. The Jupyter options will be available from the
 "Services" section of the menu. If a folder is selected then an instance of 
 Jupyter QTConsole/notebook/lab opens in the selected folder. If a file
 is selected then Jupyter is started in the file directory. If the 
-file is a jupyter notebook (*.ipynb), then selecting Jupyter notebook/lab
+file is a jupyter notebook (\*.ipynb), then selecting Jupyter notebook/lab
 will open the file in that program; Jupyter QtConsole will still only
 open in the file directory.
 
