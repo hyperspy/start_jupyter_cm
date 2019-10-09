@@ -15,10 +15,10 @@ start\_jupyter\_cm
 Description
 -----------
 
-Add entries to start the Jypyter Notebook and QtConsole from the file
+Add entries to start the Jupyter Notebook and QtConsole from the file
 manager context menu. This offers a convenient way of starting Jupyter
-in a folder. Currently it only supports Microsoft Windows and GNOME (and
-its many derivatives). Contributions to support other OSs/desktop
+in a folder. Currently it only supports Microsoft Windows, GNOME (and
+its many derivatives), and macOS. Contributions to support other OSs/desktop
 environments are highly welcome.
 
 `WinPython <http://winpython.github.io>`__ and `Anaconda <https://www.anaconda.com/distribution>`__/`Miniconda <https://docs.conda.io/en/latest/miniconda.html>`__ distributions are supported. If run from a conda environment other than `root`, the name of the environment will be specified in brackets in the context menu name. 
@@ -40,7 +40,7 @@ GNOME
 ~~~~~
 
 .. figure:: images/jupyter_cm_gnome.png
-   :alt: Jupyter context menu entries in windows
+   :alt: Jupyter context menu entries in gnome
 
    Jupyter context menu entries in gnome.
 
@@ -55,6 +55,30 @@ Alternatively, `nbmanager <https://github.com/takluyver/nbmanager>`__
 can discover all running servers and shut them down using via an UI.
 
 GNOME >= 2.22 is required.
+
+macOS
+~~~~~
+
+.. figure:: images/jupyter_cm_macos.png
+   :alt: Jupyter context menu entries in macOS
+   
+   Jupyter context menu entries in macOS
+
+The context menu is only available when an object (folder or file) is 
+selected in Finder. The Jupyter options will be available from the
+"Services" section of the menu. If a folder is selected then an instance of 
+Jupyter QTConsole/notebook/lab opens in the selected folder. If a file
+is selected then Jupyter is started in the file directory. If the 
+file is a jupyter notebook (*.ipynb), then selecting Jupyter notebook/lab
+will open the file in that program; Jupyter QtConsole will still only
+open in the file directory.
+
+As the processes are opened through a shell script in Automator, a spinning
+cog will be visible in the menu bar when the processes are running. Once you
+have finished with the server then manually kill the process via the 
+drop-down menu from this spinning cog.
+
+The launchers have been tested on macOS Mojave (10.14.6).
 
 Installation instructions
 -------------------------
@@ -95,7 +119,7 @@ To uninstall the package:
 
 On Microscoft Windows, the administrator rights are required to add the 
 entry for all users, otherwise the entries will be added only for the 
-current user. In GNOME only for the current user.
+current user. In GNOME and OSX only for the current user.
 
 Also, be aware that, uninstalling the package does not
 remove the context menu entries. If you are left with the context menu
