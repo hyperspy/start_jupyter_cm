@@ -36,8 +36,8 @@ and launching the default browser, in Microsoft Windows the process runs from
 a terminal. Closing the terminal closes the QtConsole or the Jupyter server.
 Single and all users installations are supported, see installation instructions below.
 
-GNOME
-~~~~~
+Linux (Nautilus and Caja)
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. figure:: images/jupyter_cm_gnome.png
    :alt: Jupyter context menu entries in gnome
@@ -48,10 +48,9 @@ When selecting multiple folders, one instance of Jupyter
 QtConsole/notebook/lab opens in each of the selected folders. Selecting a
 file starts Jupyter in the file directory.
 
-Note that in GNOME the processes run in the background. As of Jupyter
-Notebook 4.1 there is no way to shutdown the server from the notebook
-UI. To stop the server one has to manually kill the process.
-Alternatively, `nbmanager <https://github.com/takluyver/nbmanager>`__
+Note that on Linux the processes run in the background: to stop the jupyter
+notebook or lab, don't forget to exit using the `quit` button' - only closing 
+the tab will not stop the jupyter server. Alternatively, `nbmanager <https://github.com/takluyver/nbmanager>`__
 can discover all running servers and shut them down using via an UI.
 
 GNOME >= 2.22 is required.

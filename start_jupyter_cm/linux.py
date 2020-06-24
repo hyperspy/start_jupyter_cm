@@ -39,9 +39,9 @@ def get_file_manager_config(file_manager=None):
     file_manager_config = {}
     
     if shutil.which("nautilus"):
-        file_manager_config['nautilus'] = os.path.expanduser("~/.local/share/nautilus")
+        file_manager_config['Nautilus'] = os.path.expanduser("~/.local/share/nautilus")
     if shutil.which("caja"):
-        file_manager_config['caja'] = os.path.expanduser("~/.config/caja")
+        file_manager_config['Caja'] = os.path.expanduser("~/.config/caja")
 
     if file_manager is not None:
         if file_manager not in file_manager_config.keys():
