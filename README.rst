@@ -124,8 +124,8 @@ remove the context menu entries. If you are left with the context menu
 entries after uninstalling ``start_jupyter_cm``, reinstall it, remove
 the entries as above and uninstall it again.
 
-Optional parameters
-~~~~~~~~~~~~~~~~~~~
+Optional arguments
+~~~~~~~~~~~~~~~~~~
 
 On Linux, several file manager can be installed, to create or remove the context
 menu shortcut(s) for a specific file manager, use the ``--file_manager`` (``-f``) option:
@@ -133,6 +133,15 @@ menu shortcut(s) for a specific file manager, use the ``--file_manager`` (``-f``
 .. code:: bash
 
     $ start_jupyter_cm -f nautilus
+
+Help
+~~~~
+
+Use the command line help for more information:
+
+.. code:: bash
+
+    $ start_jupyter_cm -h
 
 
 Related software

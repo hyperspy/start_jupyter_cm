@@ -37,11 +37,11 @@ def check_supported_file_manager(manager_file_path):
 
 def get_file_manager_config(file_manager=None):
     file_manager_config = {}
-    
+
     if shutil.which("nautilus"):
-        file_manager_config['Nautilus'] = os.path.expanduser("~/.local/share/nautilus")
+        file_manager_config['nautilus'] = os.path.expanduser("~/.local/share/nautilus")
     if shutil.which("caja"):
-        file_manager_config['Caja'] = os.path.expanduser("~/.config/caja")
+        file_manager_config['caja'] = os.path.expanduser("~/.config/caja")
 
     if file_manager is not None:
         if file_manager not in file_manager_config.keys():
@@ -68,7 +68,7 @@ def add_jupyter_here(file_manager=None):
     for name, path in manager_config_path.items():
         print("File manager: %s" %name)
         scripts_folder_path = os.path.join(path, "scripts")
-    
+
         if not os.path.exists(scripts_folder_path):
             os.makedirs(scripts_folder_path)
         for terminal in ["qtconsole", "notebook", "lab"]:

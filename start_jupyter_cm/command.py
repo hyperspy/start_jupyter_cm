@@ -6,7 +6,7 @@ from start_jupyter_cm import __version__
 parser = argparse.ArgumentParser(
     description='Add or remove context menu entries to start Jupyter applications in a given directory')
 parser.add_argument('--remove', action="store_true", help='remove the entries')
-parser.add_argument('-f', '--file_manager', action="store", help='select a specific file manager (Linux only)')
+parser.add_argument('-f', '--file_manager', action="store", help='specific a file manager', choices=['nautilus', 'caja'])
 parser.add_argument('--version', action='version', version='%(prog)s {version}'.format(version=__version__))
 
 args = parser.parse_args()
