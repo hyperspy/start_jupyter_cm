@@ -26,10 +26,12 @@ environments are highly welcome.
 Microsoft Windows
 ~~~~~~~~~~~~~~~~~
 
-.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_windows.png
-   :alt: Jupyter context menu entries in windows
+.. raw:: html
 
-   Jupyter context menu entries in windows.
+   <img src="https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_windows.png"
+   alt="Jupyter context menu entries on windows."  width="250px" /><br />
+
+   Jupyter context menu entries on windows.
 
 In addition to starting the QtConsole, the Jupyter Notebook or the Jupyter Lab,
 and launching the default browser, in Microsoft Windows the process runs from
@@ -43,11 +45,12 @@ On linux, the supported file managers are: Nautilus, Caja and Dolphin. With
 Nautilus and Caja, the shortcut will appear in the *Scripts* menu and with
 Dolphin, it will appear in the *Actions* menu.
 
-.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_gnome.png
-   :alt: Jupyter context menu entries in Nautilus
-   :width: 400px
+.. raw:: html
 
-   Jupyter context menu entries in Nautilus.
+   <img src="https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_gnome.png"
+   alt="Jupyter context menu entries on Linux (Nautilus)."  width="450px" /><br />
+
+   Jupyter context menu entries on Linux (Nautilus).
 
 When selecting multiple folders, one instance of Jupyter
 QtConsole/notebook/lab opens in each of the selected folders. Selecting a
@@ -62,10 +65,13 @@ can discover all running servers and shut them down using via an UI.
 macOS
 ~~~~~
 
-.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_macos.png
-   :alt: Jupyter context menu entries in macOS
+.. raw:: html
 
-   Jupyter context menu entries in macOS
+   <img src="https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_macos.png"
+   alt="Jupyter context menu entries on macOS."  width="450px" /><br />
+
+   Jupyter context menu entries on macOS.
+
 
 The context menu is only available when an object (folder or file) is
 selected in Finder. The Jupyter options will be available from the
