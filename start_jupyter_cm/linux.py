@@ -5,15 +5,24 @@ import shutil
 
 from .utils import get_environment_label
 
+MANAGER_CONFIG_PATH = ""
 
-NPATH = os.path.expanduser("~/.local/share/nautilus")
-SPATH = os.path.join(NPATH, "scripts")
+if shutil.which("nautilus"):
+    MANAGER_CONFIG_PATH = os.path.expanduser("~/.local/share/nautilus")
+if shutil.which("caja"):
+    MANAGER_CONFIG_PATH = os.path.expanduser("~/.config/caja")
+
+if MANAGER_CONFIG_PATH == "":
+    print("Only 'nautilus' and 'caja' are supported "
+                              "file manager on linux.")
+
+SPATH = os.path.join(MANAGER_CONFIG_PATH, "scripts")
 PATH = "%s/bin"%sys.exec_prefix
 CONDA_ENV_LABEL = get_environment_label()
 
 
 script = \
-    """#!%s
+"""#!%s
 
 import sys
 import os.path
@@ -30,12 +39,18 @@ for folder in folders:
 
 """
 
+def check_supported_file_manager():
+    if not os.path.exists(MANAGER_CONFIG_PATH):
+        print("Nothing done. Currently only 'Nautilus' and 'Caja' are "
+              "supported file manager.")
+        return False
+    return True
+
 
 def add_jupyter_here():
-    if not os.path.exists(NPATH):
-        print("Nothing done. Currently only Gnome with Nautilus as file ",
-              "manager is supported.")
+    if not check_supported_file_manager:
         return
+    
     if not os.path.exists(SPATH):
         os.makedirs(SPATH)
 
@@ -62,6 +77,8 @@ def add_jupyter_here():
 
 
 def remove_jupyter_here():
+    if not check_supported_file_manager:
+        return
     for terminal in ["qtconsole", "notebook", "lab"]:
         script_path = os.path.join(SPATH, "Jupyter %s here%s" %(
                 terminal, CONDA_ENV_LABEL))
