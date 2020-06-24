@@ -1,3 +1,11 @@
+2.2.0
+-----
+The is a minor release:
+
+* Add support for Caja file manager (Linux).
+* Add option to select a specific file manager (Linux).
+* Remove unnecessary dependencies.
+
 2.1.0
 -----
 The is a minor release:
