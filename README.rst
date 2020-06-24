@@ -39,12 +39,13 @@ Single and all users installations are supported, see installation instructions 
 Linux
 ~~~~~
 
-On linux, the supported file managers are: Nautilus, Caja and Dolphin.
+On linux, the supported file managers are: Nautilus, Caja and Dolphin. With
+Nautilus and Caja, the shortcut will appear in the *Scripts* menu and with
+Dolphin, it will appear in the *Actions* menu.
 
 .. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_gnome.png
    :alt: Jupyter context menu entries in Nautilus
    :width: 400px
-
 
    Jupyter context menu entries in Nautilus.
 
