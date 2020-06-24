@@ -5,12 +5,14 @@ import shutil
 
 from .utils import get_environment_label
 
-PATH = "%s/bin"%sys.exec_prefix
+
+PATH = f"{sys.exec_prefix}/bin"
 CONDA_ENV_LABEL = get_environment_label()
 
 
-script = \
-"""#!%s
+def get_script(python_exec, PATH, terminal):
+    script = \
+f"""#!{python_exec}
 
 import sys
 import os.path
@@ -19,13 +21,15 @@ import subprocess
 folders = [path for path in sys.argv[1:] if os.path.isdir(path)]
 any_file_selected = len(folders) < len(sys.argv[1:])
 if any_file_selected:
-    subprocess.Popen(["%s/jupyter-%s"])
+    subprocess.Popen(["{PATH}/jupyter-{terminal}"])
 for folder in folders:
     os.chdir(folder)
-    subprocess.Popen(["%s/jupyter-%s"])
+    subprocess.Popen(["{PATH}/jupyter-{terminal}"])
     os.chdir("..")
 
 """
+    return script
+
 
 def check_supported_file_manager(manager_file_path):
     if len(manager_file_path) == 0:
@@ -45,7 +49,7 @@ def get_file_manager_config(file_manager=None):
 
     if file_manager is not None:
         if file_manager not in file_manager_config.keys():
-            print("File manager '%s' not installed or not supported." % file_manager)
+            print(f"File manager '{file_manager}' not installed or not supported.")
             return {}
         return {file_manager:file_manager_config[file_manager]}
     else:
@@ -66,23 +70,23 @@ def add_jupyter_here(file_manager=None):
     python_exec = shutil.which("python")
 
     for name, path in manager_config_path.items():
-        print("File manager: %s" %name)
+        print(f"File manager: {name}")
         scripts_folder_path = os.path.join(path, "scripts")
-
         if not os.path.exists(scripts_folder_path):
             os.makedirs(scripts_folder_path)
+
         for terminal in ["qtconsole", "notebook", "lab"]:
-            script_path = os.path.join(scripts_folder_path, "Jupyter %s here%s" % (
-                    terminal, CONDA_ENV_LABEL))
+            shortcut_name = f"Jupyter {terminal} here{CONDA_ENV_LABEL}"
+            script_path = os.path.join(scripts_folder_path, shortcut_name)
             if (not os.path.exists(script_path) and
-                shutil.which("jupyter-%s" % terminal)):
+                shutil.which(f"jupyter-{terminal}")):
                 with open(script_path, "w") as f:
-                    f.write(script % (python_exec, PATH, terminal, PATH, terminal))
+                    f.write(get_script(python_exec, PATH, terminal))
                 st = os.stat(script_path)
                 os.chmod(script_path, st.st_mode | stat.S_IEXEC)
-                call(['gio', 'set', '-t', 'string', '%s' % script_path,
-                      'metadata::custom-icon', 'file://%s' % logos[terminal]])
-                print('Jupyter %s here%s created.' % (terminal, CONDA_ENV_LABEL))
+                call(['gio', 'set', '-t', 'string', script_path,
+                      'metadata::custom-icon', f'file://{logos[terminal]}'])
+                print(f'{shortcut_name} created.')
 
 
 def remove_jupyter_here(file_manager=None):
@@ -91,11 +95,12 @@ def remove_jupyter_here(file_manager=None):
         return
 
     for name, path in manager_config_path.items():
-        print("File manager: %s" %name)
+        print(f"File manager: {name}")
         scripts_folder_path = os.path.join(path, "scripts")
+
         for terminal in ["qtconsole", "notebook", "lab"]:
-            script_path = os.path.join(scripts_folder_path, "Jupyter %s here%s" %(
-                    terminal, CONDA_ENV_LABEL))
+            shortcut_name = f"Jupyter {terminal} here{CONDA_ENV_LABEL}"
+            script_path = os.path.join(scripts_folder_path, shortcut_name)
             if os.path.exists(script_path):
                 os.remove(script_path)
-                print("Jupyter %s here%s removed." % (terminal, CONDA_ENV_LABEL))
+                print(f"{shortcut_name} removed.")
