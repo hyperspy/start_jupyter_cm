@@ -26,7 +26,7 @@ environments are highly welcome.
 Microsoft Windows
 ~~~~~~~~~~~~~~~~~
 
-.. figure:: images/jupyter_cm_windows.png
+.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_windows.png
    :alt: Jupyter context menu entries in windows
 
    Jupyter context menu entries in windows.
@@ -41,8 +41,10 @@ Linux
 
 On linux, the supported file managers are: Nautilus, Caja and Dolphin.
 
-.. figure:: images/jupyter_cm_gnome.png
+.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_gnome.png
    :alt: Jupyter context menu entries in Nautilus
+   :width: 400px
+
 
    Jupyter context menu entries in Nautilus.
 
@@ -59,7 +61,7 @@ can discover all running servers and shut them down using via an UI.
 macOS
 ~~~~~
 
-.. figure:: images/jupyter_cm_macos.png
+.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_macos.png
    :alt: Jupyter context menu entries in macOS
 
    Jupyter context menu entries in macOS
