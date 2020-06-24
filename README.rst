@@ -36,8 +36,8 @@ and launching the default browser, in Microsoft Windows the process runs from
 a terminal. Closing the terminal closes the QtConsole or the Jupyter server.
 Single and all users installations are supported, see installation instructions below.
 
-GNOME
-~~~~~
+Linux (Nautilus and Caja)
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. figure:: images/jupyter_cm_gnome.png
    :alt: Jupyter context menu entries in gnome
@@ -48,10 +48,9 @@ When selecting multiple folders, one instance of Jupyter
 QtConsole/notebook/lab opens in each of the selected folders. Selecting a
 file starts Jupyter in the file directory.
 
-Note that in GNOME the processes run in the background. As of Jupyter
-Notebook 4.1 there is no way to shutdown the server from the notebook
-UI. To stop the server one has to manually kill the process.
-Alternatively, `nbmanager <https://github.com/takluyver/nbmanager>`__
+Note that on Linux the processes run in the background: to stop the jupyter
+notebook or lab, don't forget to exit using the `quit` button' - only closing 
+the tab will not stop the jupyter server. Alternatively, `nbmanager <https://github.com/takluyver/nbmanager>`__
 can discover all running servers and shut them down using via an UI.
 
 GNOME >= 2.22 is required.
@@ -83,10 +82,6 @@ The launchers have been tested on macOS Mojave (10.14.6).
 Installation instructions
 -------------------------
 
-
-Any platform
-~~~~~~~~~~~~
-
 Install from pypi using pip:
 
 .. code:: bash
@@ -99,11 +94,24 @@ Or install from conda-forge channel using conda (in a Anaconda/Miniconda distrib
 
     $ conda install -c conda-forge start_jupyter_cm
 
+Usage
+-----
+
+Create context menu shortcut(s)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 After installation, enable the context menu entries from a terminal as follows:
 
 .. code:: bash
 
     $ start_jupyter_cm
+
+On Microscoft Windows, the administrator rights are required to add the 
+entry for all users, otherwise the entries will be added only for the 
+current user. In GNOME and OSX only for the current user.
+
+Remove context menu shortcut(s)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To remove the context menu entries execute the following in a terminal:
 
@@ -111,28 +119,30 @@ To remove the context menu entries execute the following in a terminal:
 
     $ start_jupyter_cm --remove
 
-To uninstall the package:
-
-.. code:: bash
-
-    $ pip uninstall start_jupyter_cm
-
-On Microscoft Windows, the administrator rights are required to add the 
-entry for all users, otherwise the entries will be added only for the 
-current user. In GNOME and OSX only for the current user.
-
 Also, be aware that, uninstalling the package does not
 remove the context menu entries. If you are left with the context menu
 entries after uninstalling ``start_jupyter_cm``, reinstall it, remove
 the entries as above and uninstall it again.
 
-Microsoft Windows
-~~~~~~~~~~~~~~~~~
+Optional arguments
+~~~~~~~~~~~~~~~~~~
 
-In Microsoft Windows the preferred way to install this package would be
-using the Windows MSI installers if it wasn't for `this Python
-bug <http://bugs.python.org/issue13276>`__. Until this issue is fixed, we will
-not distribute MSI installers.
+On Linux, several file manager can be installed, to create or remove the context
+menu shortcut(s) for a specific file manager, use the ``--file_manager`` (``-f``) option:
+
+.. code:: bash
+
+    $ start_jupyter_cm -f nautilus
+
+Help
+~~~~
+
+Use the command line help for more information:
+
+.. code:: bash
+
+    $ start_jupyter_cm -h
+
 
 Related software
 ----------------
