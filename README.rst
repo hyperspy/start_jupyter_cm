@@ -21,60 +21,70 @@ in a folder. Currently it only supports Microsoft Windows, GNOME (and
 its many derivatives), and macOS. Contributions to support other OSs/desktop
 environments are highly welcome.
 
-`WinPython <http://winpython.github.io>`__ and `Anaconda <https://www.anaconda.com/distribution>`__/`Miniconda <https://docs.conda.io/en/latest/miniconda.html>`__ distributions are supported. If run from a conda environment other than `root`, the name of the environment will be specified in brackets in the context menu name. 
+`WinPython <http://winpython.github.io>`__ and `Anaconda <https://www.anaconda.com/distribution>`__/`Miniconda <https://docs.conda.io/en/latest/miniconda.html>`__ distributions are supported. If run from a conda environment other than `root`, the name of the environment will be specified in brackets in the context menu name.
 
 Microsoft Windows
 ~~~~~~~~~~~~~~~~~
 
-.. figure:: images/jupyter_cm_windows.png
-   :alt: Jupyter context menu entries in windows
+.. raw:: html
 
-   Jupyter context menu entries in windows.
+   <img src="https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_windows.png"
+   alt="Jupyter context menu entries on windows."  width="250px" /><br />
 
-In addition to starting the QtConsole, the Jupyter Notebook or the Jupyter Lab, 
-and launching the default browser, in Microsoft Windows the process runs from 
+   Jupyter context menu entries on windows.
+
+In addition to starting the QtConsole, the Jupyter Notebook or the Jupyter Lab,
+and launching the default browser, in Microsoft Windows the process runs from
 a terminal. Closing the terminal closes the QtConsole or the Jupyter server.
 Single and all users installations are supported, see installation instructions below.
 
-Linux (Nautilus and Caja)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Linux
+~~~~~
 
-.. figure:: images/jupyter_cm_gnome.png
-   :alt: Jupyter context menu entries in gnome
+On linux, the supported file managers are: Nautilus, Caja and Dolphin. With
+Nautilus and Caja, the shortcut will appear in the *Scripts* menu and with
+Dolphin, it will appear in the *Actions* menu.
 
-   Jupyter context menu entries in gnome.
+.. raw:: html
+
+   <img src="https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_gnome.png"
+   alt="Jupyter context menu entries on Linux (Nautilus)."  width="450px" /><br />
+
+   Jupyter context menu entries on Linux (Nautilus).
 
 When selecting multiple folders, one instance of Jupyter
 QtConsole/notebook/lab opens in each of the selected folders. Selecting a
 file starts Jupyter in the file directory.
 
 Note that on Linux the processes run in the background: to stop the jupyter
-notebook or lab, don't forget to exit using the `quit` button' - only closing 
+notebook or lab, don't forget to exit using the *quit* button - only closing
 the tab will not stop the jupyter server. Alternatively, `nbmanager <https://github.com/takluyver/nbmanager>`__
 can discover all running servers and shut them down using via an UI.
 
-GNOME >= 2.22 is required.
 
 macOS
 ~~~~~
 
-.. figure:: images/jupyter_cm_macos.png
-   :alt: Jupyter context menu entries in macOS
-   
-   Jupyter context menu entries in macOS
+.. raw:: html
 
-The context menu is only available when an object (folder or file) is 
+   <img src="https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_macos.png"
+   alt="Jupyter context menu entries on macOS."  width="450px" /><br />
+
+   Jupyter context menu entries on macOS.
+
+
+The context menu is only available when an object (folder or file) is
 selected in Finder. The Jupyter options will be available from the
-"Services" section of the menu. If a folder is selected then an instance of 
+"Services" section of the menu. If a folder is selected then an instance of
 Jupyter QTConsole/notebook/lab opens in the selected folder. If a file
-is selected then Jupyter is started in the file directory. If the 
+is selected then Jupyter is started in the file directory. If the
 file is a jupyter notebook (\*.ipynb), then selecting Jupyter notebook/lab
 will open the file in that program; Jupyter QtConsole will still only
 open in the file directory.
 
 As the processes are opened through a shell script in Automator, a spinning
 cog will be visible in the menu bar when the processes are running. Once you
-have finished with the server then manually kill the process via the 
+have finished with the server then manually kill the process via the
 drop-down menu from this spinning cog.
 
 The launchers have been tested on macOS Mojave (10.14.6).
@@ -106,8 +116,8 @@ After installation, enable the context menu entries from a terminal as follows:
 
     $ start_jupyter_cm
 
-On Microscoft Windows, the administrator rights are required to add the 
-entry for all users, otherwise the entries will be added only for the 
+On Microscoft Windows, the administrator rights are required to add the
+entry for all users, otherwise the entries will be added only for the
 current user. In GNOME and OSX only for the current user.
 
 Remove context menu shortcut(s)

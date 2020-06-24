@@ -5,6 +5,7 @@ The is a minor release:
 * Add support for Caja file manager (Linux).
 * Add option to select a specific file manager (Linux).
 * Remove unnecessary dependencies.
+* Add support for Dolphin file manager (Linux).
 
 2.1.0
 -----
