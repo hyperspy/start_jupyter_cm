@@ -5,6 +5,7 @@ addons:
     packages:
     - nautilus
     - dolphin
+    - caja
     - libglib2.0-bin
 
 env:
