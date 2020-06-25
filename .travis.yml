@@ -14,9 +14,9 @@ env:
 
 matrix:
   include:
-  - env: export PYTHON_VERSION=3.7
-    python: 3.7
-  - env: export PYTHON_VERSION=3.7; CONDA=true
+  - env: export PYTHON_VERSION=3.8
+    python: 3.8
+  - env: export PYTHON_VERSION=3.8; CONDA=true
   - env: export PYTHON_VERSION=3.6
     python: 3.6
   - env: export PYTHON_VERSION=3.6; CONDA=true
@@ -50,6 +50,8 @@ script:
   - pytest --pyargs start_jupyter_cm
   - start_jupyter_cm
   - ls ~/.local/share/nautilus/scripts
+  - ls ~/.config/caja/scripts
+  - ls ~/.local/share/kservices5/ServiceMenus
   - start_jupyter_cm --remove
 
 after_failure:

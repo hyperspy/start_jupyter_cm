@@ -39,7 +39,7 @@ def get_desktop(path, terminal, logo, shortcut_name):
     Parameters
     ----------
     path : str
-        'bin' path of the python distribution 
+        'bin' path of the python distribution
     terminal : str
         Either 'notebook', 'qtconsole', or 'lab'
     logo : str
@@ -80,9 +80,9 @@ def get_file_manager_config(file_manager=None):
     file_manager_config = {}
 
     if shutil.which("nautilus"):
-        file_manager_config['nautilus'] = os.path.expanduser("~/.local/share/nautilus")
+        file_manager_config['nautilus'] = os.path.expanduser("~/.local/share/nautilus/scripts")
     if shutil.which("caja"):
-        file_manager_config['caja'] = os.path.expanduser("~/.config/caja")
+        file_manager_config['caja'] = os.path.expanduser("~/.config/caja/scripts")
     if shutil.which("dolphin"):
         file_manager_config['dolphin'] = os.path.expanduser("~/.local/share/kservices5/ServiceMenus")
 
@@ -111,18 +111,18 @@ def add_jupyter_here(file_manager=None):
     for name, scripts_folder_path in manager_config_path.items():
         print(f"File manager: {name}")
 
+        if not os.path.exists(scripts_folder_path):
+            # In case the parent folder doesn't exist
+            pathlib.Path(scripts_folder_path).mkdir(parents=True)
+
         for terminal in ["qtconsole", "notebook", "lab"]:
-            shortcut_name = f"Jupyter {terminal} here{CONDA_ENV_LABEL}"
+            shortcut_name = f"Jupyter {terminal.capitalize()} here{CONDA_ENV_LABEL}"
             if name == 'dolphin':
                 script_path = os.path.join(scripts_folder_path, f"{shortcut_name}.desktop")
                 script = get_desktop(PATH, terminal, logos[terminal], shortcut_name)
             else:
-                script_path = os.path.join(scripts_folder_path, 'scripts', shortcut_name)
+                script_path = os.path.join(scripts_folder_path, shortcut_name)
                 script = get_script(python_exec, PATH, terminal)
-
-            if not os.path.exists(scripts_folder_path):
-                # In case the parent folder doesn't exist
-                pathlib.Path(scripts_folder_path).mkdir(parents=True)
 
             # Check that we are getting jupyter from the current environment
             executable_path = shutil.which(f"jupyter-{terminal}")
@@ -148,11 +148,11 @@ def remove_jupyter_here(file_manager=None):
         print(f"File manager: {name}")
 
         for terminal in ["qtconsole", "notebook", "lab"]:
-            shortcut_name = f"Jupyter {terminal} here{CONDA_ENV_LABEL}"
+            shortcut_name = f"Jupyter {terminal.capitalize()} here{CONDA_ENV_LABEL}"
             if name == 'dolphin':
                 script_path = os.path.join(scripts_folder_path, f"{shortcut_name}.desktop")
             else:
-                script_path = os.path.join(scripts_folder_path, 'scripts', shortcut_name)
+                script_path = os.path.join(scripts_folder_path, shortcut_name)
 
             if os.path.exists(script_path):
                 os.remove(script_path)
