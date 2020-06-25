@@ -5,7 +5,7 @@ import pytest
 from subprocess import PIPE
 
 from start_jupyter_cm.utils import get_environment_label
-from start_jupyter_cm.gnome import SPATH
+from start_jupyter_cm.linux import get_file_manager_config
 
 
 def isadmin():
@@ -19,11 +19,14 @@ def isadmin():
         return False
 
 
+@pytest.mark.parametrize("file_manager", [None, 'nautilus', 'caja', 'dolphin'])
 @pytest.mark.parametrize("action", ['add', 'remove'])
-def test_run_command(action):
+def test_run_command(action, file_manager):
     call = ["start_jupyter_cm"]
     if action == 'remove':
         call.append("--remove")
+    if file_manager is not None:
+        call.append(f"-f {file_manager}")
     try:
         # https://stackoverflow.com/questions/53209127/subprocess-unexpected-keyword-argument-capture-output
         subprocess.run(call, stdout=PIPE, stderr=PIPE, check=True)
@@ -34,11 +37,17 @@ def test_run_command(action):
         print("stdout", err.stdout)
         print("stderr", err.stderr)
 
+    manager_config_path = get_file_manager_config(file_manager)
     env_label = get_environment_label()
     if sys.platform.startswith("linux"):
-        for terminal in ["qtconsole", "notebook"]:
-            script_path = os.path.join(SPATH, "Jupyter %s here%s" % (
-                    terminal, env_label))
+        for name, scripts_folder_path in manager_config_path.items():
+            for terminal in ["qtconsole", "notebook", 'lab']:
+                shortcut_name = f"Jupyter {terminal} here{env_label}"
+                if name == 'dolphin':
+                    script_path = os.path.join(scripts_folder_path, f"{shortcut_name}.desktop")
+                else:
+                    script_path = os.path.join(scripts_folder_path, 'scripts', shortcut_name)
+
             script_exist = os.path.exists(script_path)
             if action == "add":
                 assert script_exist
