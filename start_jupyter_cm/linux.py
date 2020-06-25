@@ -125,7 +125,8 @@ def add_jupyter_here(file_manager=None):
                 pathlib.Path(scripts_folder_path).mkdir(parents=True)
 
             # Check that we are getting jupyter from the current environment
-            if PATH in shutil.which(f"jupyter-{terminal}"):
+            executable_path = shutil.which(f"jupyter-{terminal}")
+            if executable_path and PATH in executable_path:
                 with open(script_path, "w") as f:
                     f.write(script)
                 st = os.stat(script_path)
