@@ -47,8 +47,8 @@ Single and all users installations are supported, see installation instructions 
 Linux
 ~~~~~
 
-On linux, the supported file managers are: Nautilus, Caja and Dolphin. With
-Nautilus and Caja, the shortcut will appear in the *Scripts* menu and with
+On linux, the supported file managers are: Nautilus, Caja, Dolphin and Nemo.
+With Nautilus and Caja, the shortcut will appear in the *Scripts* menu and with
 Dolphin, it will appear in the *Actions* menu.
 
 .. raw:: html
@@ -172,6 +172,7 @@ configuration files for each file manager. The location of these files are:
 - Nautilus: ``~/.local/share/nautilus/scripts``
 - Caja: ``~/.config/caja/scripts``
 - Dolphin: ``~/.local/share/kservices5/ServiceMenus``
+- Nemo: ``~/.local/share/nemo/actions``
 
 
 Related software
