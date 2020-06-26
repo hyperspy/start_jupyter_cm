@@ -15,13 +15,19 @@ start\_jupyter\_cm
 Description
 -----------
 
-Add entries to start the Jupyter Notebook and QtConsole from the file
+Add entries to start the `Jupyter Notebook <https://jupyter-notebook.readthedocs.io>`__,
+`Jupyter QtConsole <https://qtconsole.readthedocs.io>`__ or
+`JupyterLab <https://jupyterlab.readthedocs.io>`__ from the file
 manager context menu. This offers a convenient way of starting Jupyter
 in a folder. Currently it only supports Microsoft Windows, GNOME (and
 its many derivatives), and macOS. Contributions to support other OSs/desktop
 environments are highly welcome.
 
-`WinPython <http://winpython.github.io>`__ and `Anaconda <https://www.anaconda.com/distribution>`__/`Miniconda <https://docs.conda.io/en/latest/miniconda.html>`__ distributions are supported. If run from a conda environment other than `root`, the name of the environment will be specified in brackets in the context menu name.
+`WinPython <http://winpython.github.io>`__ and
+`Anaconda <https://www.anaconda.com/distribution>`__/
+`Miniconda <https://docs.conda.io/en/latest/miniconda.html>`__ distributions
+are supported. If run from a conda environment other than `root`, the name of
+the environment will be specified in brackets in the context menu name.
 
 Microsoft Windows
 ~~~~~~~~~~~~~~~~~
@@ -152,6 +158,20 @@ Use the command line help for more information:
 .. code:: bash
 
     $ start_jupyter_cm -h
+
+
+More information
+----------------
+
+Linux
+~~~~~
+
+On linux, the context menu shortcuts are created by adding scripts or
+configuration files for each file manager. The location of these files are:
+
+- Nautilus: ``~/.local/share/nautilus/scripts``
+- Caja: ``~/.config/caja/scripts``
+- Dolphin: ``~/.local/share/kservices5/ServiceMenus``
 
 
 Related software
