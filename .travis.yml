@@ -21,6 +21,13 @@ matrix:
   - env: export PYTHON_VERSION=3.6
     python: 3.6
   - env: export PYTHON_VERSION=3.6; CONDA=true
+  - env: export PYTHON_VERSION=3.6
+    python: 3.6
+    addons:
+      apt:
+        packages:
+        - nautilus
+        - libglib2.0-bin
 
 
 before_install:
@@ -50,10 +57,11 @@ install:
 script:
   - pytest --pyargs start_jupyter_cm
   - start_jupyter_cm
-  - ls ~/.local/share/nautilus/scripts
-  - ls ~/.config/caja/scripts
-  - ls ~/.local/share/kservices5/ServiceMenus
-  - ls ~/.local/share/nemo/actions
+  # display content of folder only if corresponding file manager is installed
+  - if [ -x "$(command -v nautilus)" ]; then ls ~/.local/share/nautilus/scripts; fi
+  - if [ -x "$(command -v dolphin)" ]; then ls ~/.local/share/kservices5/ServiceMenus; fi
+  - if [ -x "$(command -v caja)" ]; then ls ~/.config/caja/scripts; fi
+  - if [ -x "$(command -v nemo)" ]; then ls ~/.local/share/nemo/actions; fi
   - start_jupyter_cm --remove
 
 after_failure:
