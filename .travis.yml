@@ -7,6 +7,7 @@ addons:
     - dolphin
     - caja
     - libglib2.0-bin
+    - nemo
 
 env:
   global:
@@ -52,6 +53,7 @@ script:
   - ls ~/.local/share/nautilus/scripts
   - ls ~/.config/caja/scripts
   - ls ~/.local/share/kservices5/ServiceMenus
+  - ls ~/.local/share/nemo/actions
   - start_jupyter_cm --remove
 
 after_failure:
