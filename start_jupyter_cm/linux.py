@@ -21,7 +21,7 @@ import subprocess
 
 folders = [path for path in sys.argv[1:] if os.path.isdir(path)]
 any_file_selected = len(folders) < len(sys.argv[1:])
-if any_file_selected:
+if any_file_selected or len(folders) == 0:
     subprocess.Popen(["{path}/jupyter-{terminal}"])
 for folder in folders:
     os.chdir(folder)
