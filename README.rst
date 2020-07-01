@@ -54,7 +54,7 @@ Single and all users installations are supported, see installation instructions 
 Linux
 ~~~~~
 
-On linux, the supported file managers are: Nautilus, Caja, Dolphin and Nemo.
+On linux, the supported file managers are: Nautilus (GNOME), Caja (MATE), Dolphin (KDE) and Nemo (Cinnamon).
 With Nautilus and Caja, the shortcut will appear in the *Scripts* menu and with
 Dolphin, it will appear in the *Actions* menu.
 
