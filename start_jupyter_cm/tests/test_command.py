@@ -43,7 +43,7 @@ def run_command(**kwargs):
 
 
 @pytest.mark.skipif(not sys.platform.startswith("linux"), reason="Linux only")
-@pytest.mark.parametrize("file_manager", ['nautilus', 'caja', 'dolphin'])
+@pytest.mark.parametrize("file_manager", ['nautilus', 'caja', 'dolphin', 'nemo'])
 @pytest.mark.parametrize("action", ['add', 'remove'])
 def test_run_command_linux(action, file_manager):
     run_command(action=action, file_manager=file_manager)
@@ -62,6 +62,8 @@ def test_run_command_linux(action, file_manager):
             shortcut_name = f"Jupyter {terminal.capitalize()} here{env_label}"
             if name == 'dolphin':
                 script_path = os.path.join(scripts_folder_path, f"{shortcut_name}.desktop")
+            elif name == 'nemo':
+                script_path = os.path.join(scripts_folder_path, f"{shortcut_name}.nemo_action")
             else:
                 script_path = os.path.join(scripts_folder_path, shortcut_name)
 

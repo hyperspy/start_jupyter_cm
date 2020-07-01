@@ -31,6 +31,7 @@ for folder in folders:
 """
     return script
 
+
 def get_desktop(path, terminal, logo, shortcut_name):
     """
     Returns the contents of a desktop file that will launch Jupyter
@@ -66,6 +67,38 @@ inode/directory,all/all,all/allfiles\n
     return desktop_file
 
 
+def get_nemo_action(path, terminal, logo, shortcut_name):
+    """
+    Returns the contents of a nemo action file that will launch Jupyter
+    from the current environment.
+    See https://github.com/linuxmint/nemo/blob/master/files/usr/share/nemo/actions/sample.nemo_action
+
+    Parameters
+    ----------
+    path : str
+        'bin' path of the python distribution
+    terminal : str
+        Either 'notebook', 'qtconsole', or 'lab'
+    logo : str
+        Path to the logo file to use for the .desktop file
+    shortcut_name : str
+        Name of the shortcut.
+    """
+    exec_ = os.path.join(path, f'jupyter-{terminal}')
+    nemo_action_file = \
+f"""[Nemo Action]
+Active=true
+Name={shortcut_name}
+Comment=Start a {shortcut_name}.
+Exec=sh -c 'cd %F && {exec_}'
+Icon={logo}
+Selection=any
+Extensions=any
+# https://github.com/jupyter/qtconsole/blob/master/examples/jupyter-qtconsole.desktop
+# Icon-Name=network-idle
+Quote=double
+"""
+    return nemo_action_file
 
 
 def check_supported_file_manager(manager_file_path):
@@ -85,6 +118,8 @@ def get_file_manager_config(file_manager=None):
         file_manager_config['caja'] = os.path.expanduser("~/.config/caja/scripts")
     if shutil.which("dolphin"):
         file_manager_config['dolphin'] = os.path.expanduser("~/.local/share/kservices5/ServiceMenus")
+    if shutil.which("nemo"):
+        file_manager_config['nemo'] = os.path.expanduser("~/.local/share/nemo/actions/")
 
     if file_manager is not None:
         if file_manager not in file_manager_config.keys():
@@ -120,6 +155,9 @@ def add_jupyter_here(file_manager=None):
             if name == 'dolphin':
                 script_path = os.path.join(scripts_folder_path, f"{shortcut_name}.desktop")
                 script = get_desktop(PATH, terminal, logos[terminal], shortcut_name)
+            elif name == 'nemo':
+                script_path = os.path.join(scripts_folder_path, f"{shortcut_name}.nemo_action")
+                script = get_nemo_action(PATH, terminal, logos[terminal], shortcut_name)
             else:
                 script_path = os.path.join(scripts_folder_path, shortcut_name)
                 script = get_script(python_exec, PATH, terminal)
@@ -132,7 +170,7 @@ def add_jupyter_here(file_manager=None):
                 st = os.stat(script_path)
                 os.chmod(script_path, st.st_mode | stat.S_IEXEC)
                 # For nautilus and caja, we need to call gio
-                if name != 'dolphin' and shutil.which("gio"):
+                if name in ['nautilus', 'caja'] and shutil.which("gio"):
                     # Call it only if available in the system
                     call(['gio', 'set', '-t', 'string', script_path,
                           'metadata::custom-icon', f'file://{logos[terminal]}'])
@@ -151,6 +189,8 @@ def remove_jupyter_here(file_manager=None):
             shortcut_name = f"Jupyter {terminal.capitalize()} here{CONDA_ENV_LABEL}"
             if name == 'dolphin':
                 script_path = os.path.join(scripts_folder_path, f"{shortcut_name}.desktop")
+            elif name == 'nemo':
+                script_path = os.path.join(scripts_folder_path, f"{shortcut_name}.nemo_action")
             else:
                 script_path = os.path.join(scripts_folder_path, shortcut_name)
 
