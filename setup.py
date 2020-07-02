@@ -44,6 +44,7 @@ setup(
     author="The HyperSpy Developers",
     description="Add entries to start Jupyter from context menu.",
     long_description=long_description,
+    long_description_content_type="text/x-rst",
     license="BSDv3",
     url="https://github.com/hyperspy/start_jupyter_cm",
     classifiers=[
