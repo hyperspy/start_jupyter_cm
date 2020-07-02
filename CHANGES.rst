@@ -2,10 +2,13 @@
 -----
 The is a minor release:
 
-* Add support for Caja file manager (Linux).
+* Improve documentation (README.rst).
+* Add test suite on Linux and Windows, setup Travis and Appveyor.
+* Add support for Nemo file manager (Linux/Cinnamon).
+* Add support for Caja file manager (Linux/MATE).
 * Add option to select a specific file manager (Linux).
 * Remove unnecessary dependencies.
-* Add support for Dolphin file manager (Linux).
+* Add support for Dolphin file manager (Linux/KDE).
 
 2.1.0
 -----
