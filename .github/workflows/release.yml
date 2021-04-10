@@ -74,7 +74,7 @@ jobs:
           MPLBACKEND: agg
         run: |
           pip install --find-links dist start_jupyter_cm
-          pip install ${{ TEST_DEPS }}
+          pip install ${{ env.TEST_DEPS }}
           pytest --pyargs start_jupyter_cm
 
       - uses: actions/upload-artifact@v2
