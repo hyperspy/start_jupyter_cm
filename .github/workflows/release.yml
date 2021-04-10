@@ -43,6 +43,10 @@ jobs:
       TEST_DEPS: qtconsole notebook pytest
     steps:
       - uses: actions/checkout@v2
+      - name: Install file manager
+        if: runner.os == 'linux'
+        run: |
+          sudo apt-get install -y nautilus libglib2.0-bin
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -76,6 +80,11 @@ jobs:
           pip install --find-links dist start_jupyter_cm
           pip install ${{ env.TEST_DEPS }}
           pytest --pyargs start_jupyter_cm
+
+      - name: Test command
+        run: |
+          start_jupyter_cm
+          start_jupyter_cm --remove
 
       - uses: actions/upload-artifact@v2
         with:
