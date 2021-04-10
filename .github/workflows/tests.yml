@@ -1,0 +1,71 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  run_test_site:
+    name: ${{ matrix.os }}-py${{ matrix.PYTHON_VERSION }}-${{ matrix.USE_CONDA }}
+    runs-on: ${{ matrix.os }}-latest
+    timeout-minutes: 30
+    env:
+      PIP_ARGS: '-e .'
+      PIP_SELECTOR: ''
+      MPLBACKEND: agg
+      TEST_DEPS: qtconsole notebook pytest
+      PYTEST_ARGS: --pyargs start_jupyter_cm
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu", "macos", "windows"]
+        #PYTHON_VERSION: [3.6, 3.7, 3.8, 3.9]
+        PYTHON_VERSION: [3.8]
+        USE_CONDA: [true, false]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        if: ${{ matrix.USE_CONDA == true }}
+        with:
+          #activate-environment: "test"
+          python-version: ${{ matrix.PYTHON_VERSION }}
+          #miniforge-variant: Mambaforge
+
+      - uses: actions/setup-python@v2
+        if: ${{ matrix.USE_CONDA == false }}
+        name: Install Python
+        with:
+          python-version: ${{ matrix.PYTHON_VERSION }}
+
+      - name: Display version
+        run: |
+          python --version
+          pip --version
+
+      - name: Install
+        shell: bash -l {0}
+        run: |
+          pip install ${{ env.PIP_ARGS }}
+
+      - name: Install test dependencies (pip)
+        if: ${{ matrix.USE_CONDA == false }}
+        shell: bash -l {0}
+        run: |
+          pip install ${{ env.TEST_DEPS }}
+
+      - name: Install test dependencies (conda)
+        if: ${{ matrix.USE_CONDA == true }}
+        shell: bash -l {0}
+        run: |
+          conda install ${{ env.TEST_DEPS }}
+
+      - name: Run test suite
+        shell: bash -l {0}
+        run: |
+          pytest ${{ env.PYTEST_ARGS }}
+
+      - name: Test command
+        shell: bash -l {0}
+        run: |
+          start_jupyter_cm
+          start_jupyter_cm --remove
+
