@@ -17,12 +17,12 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu", "macos", "windows"]
-        #PYTHON_VERSION: [3.6, 3.7, 3.8, 3.9]
-        PYTHON_VERSION: [3.8]
+        PYTHON_VERSION: [3.6, 3.8, 3.9]
         PACKAGE_MANAGER: [conda, pip]
         ENVIRONMENT_NAME: ["test_env"]
         include:
-          # test oldest supported version of main dependencies on python 3.6
+          # The python version of the base environment will be what comes with
+          # the distribution
           - os: ubuntu
             PYTHON_VERSION: ''
             ENVIRONMENT_NAME: ''
