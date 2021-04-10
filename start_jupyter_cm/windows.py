@@ -114,13 +114,15 @@ def _add_jupyter_here(all_users):
                 # Calling from a conda environment, call activation script
                 # before executing script.
                 script = '%windir%\system32\cmd.exe /K '
-                script0 = f"{os.path.join(os.path.split(os.environ['CONDA_EXE'])[0], 'activate.bat')}"
+                script0 = f'{os.path.join(os.path.split(os.environ["CONDA_EXE"])[0], "activate.bat")}'
+                # We need the double quotation marks to escape possible space in the path
+                script += f'"{script0}"'
                 if CONDA_ENV_LABEL != "":
-                    script0 += ' ' + os.environ["CONDA_DEFAULT_ENV"]
-                script += f'"{script0}" & jupyter-{terminal}.exe'
+                    script += ' ' + os.environ["CONDA_DEFAULT_ENV"]
+                script += f' & jupyter-{terminal}.exe'
             else:
-                script = os.path.join(
-                    sys.prefix, 'Scripts', "jupyter-%s.exe" % terminal)
+                path = f'{os.path.join(sys.prefix, "Scripts", f"jupyter-{terminal}.exe")}'
+                script = f'"{path}"'
 
             key = winreg.CreateKey(
                 h_key_base,
