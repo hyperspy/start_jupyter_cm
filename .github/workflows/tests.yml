@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   run_test_site:
-    name: ${{ matrix.os }}-py${{ matrix.PYTHON_VERSION }}-${{ matrix.USE_CONDA }}
+    name: ${{ matrix.os }}-py${{ matrix.PYTHON_VERSION }}-${{ matrix.USE_CONDA }}${{ matrix.LABEL }}
     runs-on: ${{ matrix.os }}-latest
     timeout-minutes: 30
     env:
@@ -20,15 +20,29 @@ jobs:
         #PYTHON_VERSION: [3.6, 3.7, 3.8, 3.9]
         PYTHON_VERSION: [3.8]
         USE_CONDA: [true, false]
+        ENVIRONMENT_NAME: ["test_env"]
+        include:
+          # test oldest supported version of main dependencies on python 3.6
+          - os: ubuntu
+            PYTHON_VERSION: ''
+            ENVIRONMENT_NAME: ''
+            USE_CONDA: true
+            LABEL: -base_env
+        exclude:
+          # pip on macos doesn't seemt to play well with bash -l {0}, which is
+          # required to use setup-miniconda
+          - os: macos
+            USE_CONDA: false
+
 
     steps:
       - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@v2
         if: ${{ matrix.USE_CONDA == true }}
         with:
-          #activate-environment: "test"
+          auto-activate-base: true
+          activate-environment: ${{ matrix.ENVIRONMENT_NAME }}
           python-version: ${{ matrix.PYTHON_VERSION }}
-          #miniforge-variant: Mambaforge
 
       - uses: actions/setup-python@v2
         if: ${{ matrix.USE_CONDA == false }}
@@ -37,6 +51,7 @@ jobs:
           python-version: ${{ matrix.PYTHON_VERSION }}
 
       - name: Display version
+        shell: bash -l {0}
         run: |
           python --version
           pip --version
