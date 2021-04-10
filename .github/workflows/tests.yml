@@ -1,0 +1,91 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  run_test_site:
+    name: ${{ matrix.os }}-${{ matrix.PACKAGE_MANAGER }}-py${{ matrix.PYTHON_VERSION }}${{ matrix.LABEL }}
+    runs-on: ${{ matrix.os }}-latest
+    timeout-minutes: 30
+    env:
+      PIP_ARGS: '-e .'
+      PIP_SELECTOR: ''
+      MPLBACKEND: agg
+      TEST_DEPS: qtconsole notebook pytest
+      PYTEST_ARGS: --pyargs start_jupyter_cm
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu", "macos", "windows"]
+        PYTHON_VERSION: [3.6, 3.8, 3.9]
+        PACKAGE_MANAGER: [conda, pip]
+        ENVIRONMENT_NAME: ["test_env"]
+        include:
+          # The python version of the base environment will be what comes with
+          # the distribution
+          - os: ubuntu
+            PYTHON_VERSION: ''
+            ENVIRONMENT_NAME: ''
+            PACKAGE_MANAGER: conda
+            LABEL: _base_env
+        exclude:
+          # pip on macos doesn't seemt to play well with bash -l {0}, which is
+          # required to use setup-miniconda
+          - os: macos
+            PACKAGE_MANAGER: pip
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install file manager
+        if: runner.os == 'linux'
+        run: |
+          sudo apt-get install -y nautilus dolphin caja libglib2.0-bin nemo
+
+      - uses: conda-incubator/setup-miniconda@v2
+        if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
+        with:
+          auto-activate-base: true
+          activate-environment: ${{ matrix.ENVIRONMENT_NAME }}
+          python-version: ${{ matrix.PYTHON_VERSION }}
+          miniforge-variant: Mambaforge
+
+      - uses: actions/setup-python@v2
+        if: ${{ matrix.PACKAGE_MANAGER == 'pip' }}
+        name: Install Python
+        with:
+          python-version: ${{ matrix.PYTHON_VERSION }}
+
+      - name: Display version
+        shell: bash -l {0}
+        run: |
+          python --version
+          pip --version
+
+      - name: Install
+        shell: bash -l {0}
+        run: |
+          pip install ${{ env.PIP_ARGS }}
+
+      - name: Install test dependencies (pip)
+        if: ${{ matrix.PACKAGE_MANAGER == 'pip' }}
+        shell: bash -l {0}
+        run: |
+          pip install ${{ env.TEST_DEPS }}
+
+      - name: Install test dependencies (conda)
+        if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
+        shell: bash -l {0}
+        run: |
+          mamba install ${{ env.TEST_DEPS }}
+
+      - name: Run test suite
+        shell: bash -l {0}
+        run: |
+          pytest ${{ env.PYTEST_ARGS }}
+
+      - name: Test command
+        shell: bash -l {0}
+        run: |
+          start_jupyter_cm
+          start_jupyter_cm --remove
+

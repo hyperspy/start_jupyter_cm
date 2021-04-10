@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with  HyperSpy.  If not, see <http://www.gnu.org/licenses/>.
 
-from setuptools import setup
+from setuptools import setup, find_packages
 import os
 # To use a consistent encoding
 from codecs import open
@@ -32,9 +32,8 @@ with open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name="start_jupyter_cm",
-    package_dir={'start_jupyter_cm': 'start_jupyter_cm'},
     version=start_jupyter_cm.__version__,
-    packages=['start_jupyter_cm', ],
+    packages=find_packages(),
     requires=[],
     package_data={'start_jupyter_cm': ['scripts/*.py',
                                        'icons/*.ico',
@@ -52,6 +51,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Development Status :: 4 - Beta",
         "Environment :: Console",
         "License :: OSI Approved :: BSD License",
