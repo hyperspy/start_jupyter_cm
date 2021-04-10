@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   run_test_site:
-    name: ${{ matrix.os }}-py${{ matrix.PYTHON_VERSION }}-${{ matrix.PACKAGE_MANAGER }}${{ matrix.LABEL }}
+    name: ${{ matrix.os }}-${{ matrix.PACKAGE_MANAGER }}-py${{ matrix.PYTHON_VERSION }}${{ matrix.LABEL }}
     runs-on: ${{ matrix.os }}-latest
     timeout-minutes: 30
     env:
@@ -27,7 +27,7 @@ jobs:
             PYTHON_VERSION: ''
             ENVIRONMENT_NAME: ''
             PACKAGE_MANAGER: conda
-            LABEL: -base_env
+            LABEL: _base_env
         exclude:
           # pip on macos doesn't seemt to play well with bash -l {0}, which is
           # required to use setup-miniconda
