@@ -63,6 +63,7 @@ jobs:
           version_file: start_jupyter_cm/__init__.py
           VERSION: ${{ needs.create_release.outputs.VERSION }}
         run: |
+          # Normally, the version should already have been set but just in case!
           echo '__version__ = "${{ env.VERSION }}"' > ${{ env.version_file }}
 
       - name: Build source distribution
