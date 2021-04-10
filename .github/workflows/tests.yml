@@ -34,7 +34,6 @@ jobs:
           - os: macos
             USE_CONDA: false
 
-
     steps:
       - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@v2
@@ -43,6 +42,7 @@ jobs:
           auto-activate-base: true
           activate-environment: ${{ matrix.ENVIRONMENT_NAME }}
           python-version: ${{ matrix.PYTHON_VERSION }}
+          miniforge-variant: Mambaforge
 
       - uses: actions/setup-python@v2
         if: ${{ matrix.USE_CONDA == false }}
@@ -71,7 +71,7 @@ jobs:
         if: ${{ matrix.USE_CONDA == true }}
         shell: bash -l {0}
         run: |
-          conda install ${{ env.TEST_DEPS }}
+          mamba install ${{ env.TEST_DEPS }}
 
       - name: Run test suite
         shell: bash -l {0}
