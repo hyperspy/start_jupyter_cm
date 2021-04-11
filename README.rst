@@ -1,7 +1,7 @@
 start\_jupyter\_cm
 ==================
 
-|pypi_version|_  |python_version|_ |conda-forge|_ |travis|_ |appveyor|_
+|pypi_version|_  |python_version|_ |conda-forge|_ |tests|_
 
 .. |pypi_version| image:: https://img.shields.io/pypi/v/start-jupyter-cm.svg?style=flat
 .. _pypi_version: https://pypi.python.org/pypi/start-jupyter-cm
@@ -12,11 +12,8 @@ start\_jupyter\_cm
 .. |conda-forge| image:: https://img.shields.io/conda/pn/conda-forge/start_jupyter_cm?label=conda-forge
 .. _conda-forge: https://anaconda.org/conda-forge/start_jupyter_cm
 
-.. |travis| image:: https://img.shields.io/travis/hyperspy/start_jupyter_cm?label=Travis
-.. _travis: https://travis-ci.org/github/hyperspy/start_jupyter_cm
-
-.. |appveyor| image:: https://img.shields.io/appveyor/build/hyperspy/start-jupyter-cm?label=Appveyor
-.. _appveyor: https://ci.appveyor.com/project/hyperspy/start-jupyter-cm
+.. |Tests| image:: https://github.com/hyperspy/start_jupyter_cm/actions/workflows/tests.yml/badge.svg
+.. _tests: https://github.com/hyperspy/start_jupyter_cm/actions/workflows/tests.yml
 
 
 Description
