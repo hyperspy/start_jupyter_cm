@@ -1,3 +1,13 @@
+2.4.0.dev (UNRELEASED)
+----------------------
+
+
+2.3.0
+-----
+The is a minor release:
+* Move CI to GitHub Actions and add releasing guide
+* Add support for space in path
+
 2.2.0
 -----
 The is a minor release:
