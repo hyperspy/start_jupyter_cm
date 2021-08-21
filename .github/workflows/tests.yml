@@ -39,6 +39,7 @@ jobs:
       - name: Install file manager
         if: runner.os == 'linux'
         run: |
+          sudo apt-get update -y 
           sudo apt-get install -y nautilus dolphin caja libglib2.0-bin nemo
 
       - uses: conda-incubator/setup-miniconda@v2
