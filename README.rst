@@ -36,7 +36,7 @@ the environment will be specified in brackets in the context menu name.
 Microsoft Windows
 ~~~~~~~~~~~~~~~~~
 
-.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_windows.png
+.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/main/images/jupyter_cm_windows.png
    :alt: Jupyter context menu entries in windows
    :width: 250px
 
@@ -55,7 +55,7 @@ On linux, the supported file managers are: Nautilus (GNOME), Caja (MATE), Dolphi
 With Nautilus and Caja, the shortcut will appear in the *Scripts* menu and with
 Dolphin, it will appear in the *Actions* menu.
 
-.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_gnome.png
+.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/main/images/jupyter_cm_gnome.png
    :alt: Jupyter context menu entries in Nautilus
    :width: 450px
 
@@ -75,7 +75,7 @@ can discover all running servers and shut them down using via an UI.
 macOS
 ~~~~~
 
-.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/master/images/jupyter_cm_macos.png
+.. figure:: https://github.com/hyperspy/start_jupyter_cm/raw/main/images/jupyter_cm_macos.png
    :alt: Jupyter context menu entries in macOS
    :width: 450px
 
