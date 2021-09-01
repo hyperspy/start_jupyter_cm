@@ -12,6 +12,8 @@ on:
 
 jobs:
   create_release:
+    permissions:
+      contents: write
     name: Create Release
     runs-on: ubuntu-latest
     outputs: 
@@ -46,6 +48,7 @@ jobs:
       - name: Install file manager
         if: runner.os == 'linux'
         run: |
+          sudo apt-get update -y 
           sudo apt-get install -y nautilus libglib2.0-bin
 
       - name: Set up Python
