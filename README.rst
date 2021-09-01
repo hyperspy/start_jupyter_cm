@@ -29,9 +29,11 @@ environments are highly welcome.
 
 `WinPython <http://winpython.github.io>`__ and
 `Anaconda <https://www.anaconda.com/distribution>`__/
-`Miniconda <https://docs.conda.io/en/latest/miniconda.html>`__ distributions
-are supported. If run from a conda environment other than `root`, the name of
-the environment will be specified in brackets in the context menu name.
+`Miniconda <https://docs.conda.io/en/latest/miniconda.html>`__/
+`Miniforge <https://github.com/conda-forge/miniforge>`__/
+`Mambaforge <https://github.com/conda-forge/miniforge#mambaforge>`__
+distributions are supported. If run from a conda environment other than `root`,
+the name of the environment will be specified in brackets in the context menu name.
 
 Microsoft Windows
 ~~~~~~~~~~~~~~~~~
