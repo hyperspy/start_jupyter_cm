@@ -1,3 +1,6 @@
+2.4.0.dev (UNRELEASED)
+----------------------
+
 2.3.1
 -----
 The is a patch release:
