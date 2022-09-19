@@ -1,6 +1,8 @@
 2.4.0.dev (UNRELEASED)
 ----------------------
 
+* Add support for python 3.10 and drop python 3.6
+
 2.3.1
 -----
 The is a patch release:
