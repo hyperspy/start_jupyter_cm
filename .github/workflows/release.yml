@@ -88,7 +88,7 @@ jobs:
           start_jupyter_cm
           start_jupyter_cm --remove
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: |
             ./dist/*.whl
