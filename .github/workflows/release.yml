@@ -21,7 +21,7 @@ jobs:
       VERSION: ${{ env.VERSION }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
@@ -42,7 +42,7 @@ jobs:
     env:
       TEST_DEPS: qtconsole notebook pytest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install file manager
         if: runner.os == 'linux'
         run: |
