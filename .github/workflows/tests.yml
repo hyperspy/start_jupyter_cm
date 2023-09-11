@@ -35,7 +35,7 @@ jobs:
             PACKAGE_MANAGER: pip
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install file manager
         if: runner.os == 'linux'
         run: |
