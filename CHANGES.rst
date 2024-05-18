@@ -1,7 +1,8 @@
 2.4.0.dev (UNRELEASED)
 ----------------------
 
-* Add support for python 3.10 and drop python 3.6
+* Add explicit support for python 3.11, 3.12 and 3.13 and drop python 3.7
+* Add explicit support for python 3.10 and drop python 3.6
 * Pin third party GitHub actions to SHA and update GitHub actions
 
 2.3.1

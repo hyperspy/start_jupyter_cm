@@ -5,29 +5,34 @@ on: [push, pull_request]
 jobs:
   run_test_site:
     name: ${{ matrix.os }}-${{ matrix.PACKAGE_MANAGER }}-py${{ matrix.PYTHON_VERSION }}${{ matrix.LABEL }}
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     env:
       PIP_ARGS: '-e .'
       PIP_SELECTOR: ''
       MPLBACKEND: agg
-      TEST_DEPS: qtconsole notebook pytest
       PYTEST_ARGS: --pyargs start_jupyter_cm
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu", "macos", "windows"]
-        PYTHON_VERSION: ['3.7', '3.9', '3.10']
+        os: ["ubuntu-latest", "macos-13", "macos-latest", "windows-latest"]
+        PYTHON_VERSION: ['3.8', '3.10', '3.12']
         PACKAGE_MANAGER: [conda, pip]
+        # Use only in conda based distribution
         ENVIRONMENT_NAME: ["test_env"]
+        TEST_DEPS: ["qtconsole jupyterlab pytest"]
         include:
           # The python version of the base environment will be what comes with
           # the distribution
-          - os: ubuntu
-            PYTHON_VERSION: ''
+          - os: ubuntu-latest
             ENVIRONMENT_NAME: ''
             PACKAGE_MANAGER: conda
+            TEST_DEPS: 'qtconsole jupyterlab pytest'
             LABEL: _base_env
+          - os: ubuntu-latest
+            PYTHON_VERSION: '3.13-dev'
+            PACKAGE_MANAGER: pip
+            TEST_DEPS: 'qtconsole pytest'
         exclude:
           # pip on macos doesn't seemt to play well with bash -l {0}, which is
           # required to use setup-miniconda
@@ -71,13 +76,13 @@ jobs:
         if: ${{ matrix.PACKAGE_MANAGER == 'pip' }}
         shell: bash -l {0}
         run: |
-          pip install ${{ env.TEST_DEPS }}
+          pip install ${{ matrix.TEST_DEPS }}
 
       - name: Install test dependencies (conda)
         if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
         shell: bash -l {0}
         run: |
-          mamba install ${{ env.TEST_DEPS }}
+          mamba install ${{ matrix.TEST_DEPS }}
 
       - name: Run test suite
         shell: bash -l {0}

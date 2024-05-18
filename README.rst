@@ -1,20 +1,27 @@
 start\_jupyter\_cm
 ==================
 
-|pypi_version|_  |python_version|_ |conda-forge|_ |tests|_
+|python_version| |pypi_version| |conda-forge| |tests| |license|
 
 .. |pypi_version| image:: https://img.shields.io/pypi/v/start-jupyter-cm.svg?style=flat
-.. _pypi_version: https://pypi.python.org/pypi/start-jupyter-cm
+   :target: https://pypi.python.org/pypi/start-jupyter-cm
+   :alt: PyPI version
 
 .. |python_version| image:: https://img.shields.io/pypi/pyversions/start-jupyter-cm.svg?style=flat
-.. _python_version: https://pypi.python.org/pypi/start-jupyter-cm
+   :target: https://pypi.python.org/pypi/start-jupyter-cm
+   :alt: Supported python versions
 
-.. |conda-forge| image:: https://img.shields.io/conda/pn/conda-forge/start_jupyter_cm?label=conda-forge
-.. _conda-forge: https://anaconda.org/conda-forge/start_jupyter_cm
+.. |conda-forge| image:: https://img.shields.io/conda/vn/conda-forge/start_jupyter_cm
+   :target: https://anaconda.org/conda-forge/start_jupyter_cm
+   :alt: Conda forge version
 
 .. |Tests| image:: https://github.com/hyperspy/start_jupyter_cm/actions/workflows/tests.yml/badge.svg
-.. _tests: https://github.com/hyperspy/start_jupyter_cm/actions/workflows/tests.yml
+   :target: https://github.com/hyperspy/start_jupyter_cm/actions/workflows/tests.yml
+   :alt: Github tests status
 
+.. |license| image:: https://img.shields.io/badge/License-GPLv3-blue.svg
+   :target: https://www.gnu.org/licenses/gpl-3.0
+   :alt: License: GPL v3
 
 Description
 -----------
@@ -98,7 +105,7 @@ cog will be visible in the menu bar when the processes are running. Once you
 have finished with the server then manually kill the process via the
 drop-down menu from this spinning cog.
 
-The launchers have been tested on macOS Mojave (10.14.6), Catalina (10.15) and Big Sur (11.1-11.5.1).
+The launchers have been tested on macOS Mojave (10.14) to Sonoma (14).
 
 Installation instructions
 -------------------------
