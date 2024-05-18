@@ -1,6 +1,13 @@
 name: Package & Test
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/*'
+  pull_request:
+    branches:
+      - '*'
+  workflow_dispatch:
 
 jobs:
   package_and_test:

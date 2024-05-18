@@ -1,6 +1,16 @@
 name: Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/*'
+  pull_request:
+    branches:
+      - '*'
+  schedule:
+    # Run at midnight on each Saturday
+    - cron:  '0 0 * * 6'
+  workflow_dispatch:
 
 jobs:
   run_test_site:
