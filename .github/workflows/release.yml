@@ -1,9 +1,12 @@
 name: Release
+# Reusable workflow are not supported with trusted publisher
+# https://github.com/pypa/gh-action-pypi-publish/issues/166
+# copy and paste most of
+# https://github.com/hyperspy/.github/blob/main/.github/workflows/release_pure_python.yml
+
 # This workflow builds the wheels "on tag".
-# If run from the hyperspy/start_jupyter_cm repository, the wheels will be
-# uploaded to pypi; otherwise, the wheels will be available as a github artifact.
-# This workflow overwrite the version in `start_jupyter_cm/__init__.py`
-# with the tag
+# If run from the hyperspy/hyperspy repository, the wheels will be uploaded to pypi ;
+# otherwise, the wheels will be available as a github artifact.
 on:
   push:
     # Sequence of patterns matched against refs/tags
@@ -11,98 +14,45 @@ on:
     - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
-  create_release:
+  package_and_test:
+    name: Package and Test
+    # Use the "reusable workflow" from the hyperspy organisation
+    uses: hyperspy/.github/.github/workflows/package_and_test.yml@main
+    with:
+      EXTRAS: ''
+      ADDITIONAL_TEST_DEPENDENCIES: 'qtconsole jupyterlab pytest'
+
+  upload_to_pypi:
+    needs: [package_and_test]
+    runs-on: ubuntu-latest
+    name: Upload to pypi
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+    steps:
+    - name: Download dist
+      uses: actions/download-artifact@v4
+
+    - name: Display downloaded files
+      run: |
+        ls -shR
+      working-directory: dist
+
+    - uses: pypa/gh-action-pypi-publish@release/v1
+      if: ${{ startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'hyperspy' }}
+      # See https://docs.pypi.org/trusted-publishers/using-a-publisher/
+
+  create_github_release:
+    # If zenodo is setup to create a DOI automatically on a GitHub release,
+    # this step will trigger the mining of the DOI
+    needs: upload_to_pypi
     permissions:
       contents: write
-    name: Create Release
+    name: Create GitHub Release
     runs-on: ubuntu-latest
-    outputs: 
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-      VERSION: ${{ env.VERSION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Create Release
-        id: create_release
+        if: ${{ startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'hyperspy' }}
         uses: softprops/action-gh-release@9d7c94cfd0a1f3ed45544c887983e9fa900f0564
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions
-        with:
-          draft: false
-          prerelease: false
-      - name: Get version (on tag)
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          echo "VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
-
-  build_wheels_linux:
-    name: Wheels on ubuntu-latest
-    needs: create_release
-    runs-on: ubuntu-latest
-    env:
-      TEST_DEPS: qtconsole notebook pytest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install file manager
-        if: runner.os == 'linux'
-        run: |
-          sudo apt-get update -y 
-          sudo apt-get install -y nautilus libglib2.0-bin
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.8
-
-      - name: Install release dependencies
-        run: |
-          python -m pip install twine wheel
-
-      - name: Overwrite __version__ with tag
-        if: startsWith(github.ref, 'refs/tags/')
-        env: 
-          version_file: start_jupyter_cm/__init__.py
-          VERSION: ${{ needs.create_release.outputs.VERSION }}
-        run: |
-          # Normally, the version should already have been set but just in case!
-          echo '__version__ = "${{ env.VERSION }}"' > ${{ env.version_file }}
-
-      - name: Build source distribution
-        run: |
-          python setup.py sdist bdist_wheel
-
-      - name: Display content dist folder
-        run: |
-          ls dist/
-
-      - name: Install and test distribution
-        env:
-          MPLBACKEND: agg
-        run: |
-          pip install --find-links dist start_jupyter_cm
-          pip install ${{ env.TEST_DEPS }}
-          pytest --pyargs start_jupyter_cm
-
-      - name: Test command
-        run: |
-          start_jupyter_cm
-          start_jupyter_cm --remove
-
-      - uses: actions/upload-artifact@v4
-        with:
-          path: |
-            ./dist/*.whl
-            ./dist/*.tar.gz
-
-      - name: Publish wheels to PyPI
-        if: github.repository_owner == 'hyperspy'
-        env:
-          # Github secret set in the hyperspy/start_jupyter_cm repository
-          # Not available from fork or pull request
-          # Secrets are not passed to workflows that are triggered by a pull request from a fork
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          twine upload dist/*.whl --verbose 
-          twine upload dist/*.tar.gz --verbose 
-
