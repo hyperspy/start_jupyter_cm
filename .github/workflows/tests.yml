@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   run_test_site:
     name: ${{ matrix.os }}-${{ matrix.PACKAGE_MANAGER }}-py${{ matrix.PYTHON_VERSION }}${{ matrix.LABEL }}
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     env:
       PIP_ARGS: '-e .'
@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu", "macos", "windows"]
+        os: ["ubuntu-latest", "macos-13", "macos-latest", "windows-latest"]
         PYTHON_VERSION: ['3.8', '3.10', '3.12']
         PACKAGE_MANAGER: [conda, pip]
         ENVIRONMENT_NAME: ["test_env"]
