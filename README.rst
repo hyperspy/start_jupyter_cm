@@ -98,7 +98,7 @@ cog will be visible in the menu bar when the processes are running. Once you
 have finished with the server then manually kill the process via the
 drop-down menu from this spinning cog.
 
-The launchers have been tested on macOS Mojave (10.14.6), Catalina (10.15) and Big Sur (11.1-11.5.1).
+The launchers have been tested on macOS Mojave (10.14) to Sonoma (14).
 
 Installation instructions
 -------------------------
