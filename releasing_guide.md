@@ -12,9 +12,10 @@ Create a PR and go through the following steps:
 **Tag and release**
 :warning: this is a point of no return point :warning:
 - push tag (`vx.y.z`) to the upstream repository and the following will be triggered:
+  - make the packages (wheel and tarball)
+  - test the package
+  - upload to pypi
   - creation of a Github Release
-  - build of the wheels and their upload to pypi
-  - update of the current version on readthedocs to this release
 
 **Post-release action**
 - Increment the version and set it back to dev: `vx.y.z.dev0`
