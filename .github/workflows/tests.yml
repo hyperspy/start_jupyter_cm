@@ -60,10 +60,16 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v3
         if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
         with:
+          miniforge-version: latest
           auto-activate-base: true
           activate-environment: ${{ matrix.ENVIRONMENT_NAME }}
           python-version: ${{ matrix.PYTHON_VERSION }}
-          miniforge-variant: Mambaforge
+          conda-remove-defaults: "true"
+
+      - name: Install pip (conda)
+        if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
+        run: |
+          mamba install pip
 
       - uses: actions/setup-python@v5
         if: ${{ matrix.PACKAGE_MANAGER == 'pip' }}
@@ -94,6 +100,21 @@ jobs:
         run: |
           mamba install ${{ matrix.TEST_DEPS }}
 
+      - name: Mamba info
+        if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
+        run: |
+          mamba info
+  
+      - name: Conda list
+        if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
+        run: |
+          conda list
+
+      - name: Pip list
+        if: ${{ matrix.PACKAGE_MANAGER == 'pip' }}
+        run: |
+          pip list
+
       - name: Run test suite
         shell: bash -l {0}
         run: |
@@ -104,4 +125,3 @@ jobs:
         run: |
           start_jupyter_cm
           start_jupyter_cm --remove
-
