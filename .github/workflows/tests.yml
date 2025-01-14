@@ -22,6 +22,10 @@ jobs:
       PIP_SELECTOR: ''
       MPLBACKEND: agg
       PYTEST_ARGS: --pyargs start_jupyter_cm
+    defaults:
+      run:
+        shell: bash -el {0}
+  
     strategy:
       fail-fast: false
       matrix:
@@ -78,25 +82,21 @@ jobs:
           python-version: ${{ matrix.PYTHON_VERSION }}
 
       - name: Display version
-        shell: bash -l {0}
         run: |
           python --version
           pip --version
 
       - name: Install
-        shell: bash -l {0}
         run: |
           pip install ${{ env.PIP_ARGS }}
 
       - name: Install test dependencies (pip)
         if: ${{ matrix.PACKAGE_MANAGER == 'pip' }}
-        shell: bash -l {0}
         run: |
           pip install ${{ matrix.TEST_DEPS }}
 
       - name: Install test dependencies (conda)
         if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
-        shell: bash -l {0}
         run: |
           mamba install ${{ matrix.TEST_DEPS }}
 
@@ -116,12 +116,10 @@ jobs:
           pip list
 
       - name: Run test suite
-        shell: bash -l {0}
         run: |
           pytest ${{ env.PYTEST_ARGS }}
 
       - name: Test command
-        shell: bash -l {0}
         run: |
           start_jupyter_cm
           start_jupyter_cm --remove
