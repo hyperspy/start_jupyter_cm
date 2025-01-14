@@ -73,7 +73,7 @@ jobs:
       - name: Install pip (conda)
         if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
         run: |
-          mamba install pip
+          conda install pip
 
       - uses: actions/setup-python@v5
         if: ${{ matrix.PACKAGE_MANAGER == 'pip' }}
@@ -98,12 +98,12 @@ jobs:
       - name: Install test dependencies (conda)
         if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
         run: |
-          mamba install ${{ matrix.TEST_DEPS }}
+          conda install ${{ matrix.TEST_DEPS }}
 
-      - name: Mamba info
+      - name: Conda info
         if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
         run: |
-          mamba info
+          conda info
   
       - name: Conda list
         if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
