@@ -15,18 +15,22 @@ on:
 jobs:
   run_test_site:
     name: ${{ matrix.os }}-${{ matrix.PACKAGE_MANAGER }}-py${{ matrix.PYTHON_VERSION }}${{ matrix.LABEL }}
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
     timeout-minutes: 30
     env:
       PIP_ARGS: '-e .'
       PIP_SELECTOR: ''
       MPLBACKEND: agg
       PYTEST_ARGS: --pyargs start_jupyter_cm
+    defaults:
+      run:
+        shell: bash -el {0}
+  
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-latest", "macos-13", "macos-latest", "windows-latest"]
-        PYTHON_VERSION: ['3.8', '3.10', '3.12']
+        os: ["ubuntu", "macos", "windows"]
+        PYTHON_VERSION: ['3.9', '3.10', '3.12']
         PACKAGE_MANAGER: [conda, pip]
         # Use only in conda based distribution
         ENVIRONMENT_NAME: ["test_env"]
@@ -34,20 +38,20 @@ jobs:
         include:
           # The python version of the base environment will be what comes with
           # the distribution
-          - os: ubuntu-latest
+          - os: ubuntu
             ENVIRONMENT_NAME: ''
             PACKAGE_MANAGER: conda
             TEST_DEPS: 'qtconsole jupyterlab pytest'
             LABEL: _base_env
-          - os: ubuntu-latest
+          - os: ubuntu
             PYTHON_VERSION: '3.13-dev'
             PACKAGE_MANAGER: pip
             TEST_DEPS: 'qtconsole pytest'
-        exclude:
-          # pip on macos doesn't seemt to play well with bash -l {0}, which is
-          # required to use setup-miniconda
-          - os: macos
-            PACKAGE_MANAGER: pip
+          - os: ubuntu
+            ENVIRONMENT_NAME: 'test_env'
+            PYTHON_VERSION: '3.11'
+            PACKAGE_MANAGER: conda
+            TEST_DEPS: 'qtconsole jupyterlab pytest'
 
     steps:
       - uses: actions/checkout@v4
@@ -60,10 +64,16 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v3
         if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
         with:
+          miniforge-version: latest
           auto-activate-base: true
           activate-environment: ${{ matrix.ENVIRONMENT_NAME }}
           python-version: ${{ matrix.PYTHON_VERSION }}
-          miniforge-variant: Mambaforge
+          conda-remove-defaults: "true"
+
+      - name: Install pip (conda)
+        if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
+        run: |
+          conda install pip
 
       - uses: actions/setup-python@v5
         if: ${{ matrix.PACKAGE_MANAGER == 'pip' }}
@@ -72,36 +82,44 @@ jobs:
           python-version: ${{ matrix.PYTHON_VERSION }}
 
       - name: Display version
-        shell: bash -l {0}
         run: |
           python --version
           pip --version
 
       - name: Install
-        shell: bash -l {0}
         run: |
           pip install ${{ env.PIP_ARGS }}
 
       - name: Install test dependencies (pip)
         if: ${{ matrix.PACKAGE_MANAGER == 'pip' }}
-        shell: bash -l {0}
         run: |
           pip install ${{ matrix.TEST_DEPS }}
 
       - name: Install test dependencies (conda)
         if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
-        shell: bash -l {0}
         run: |
-          mamba install ${{ matrix.TEST_DEPS }}
+          conda install ${{ matrix.TEST_DEPS }}
+
+      - name: Conda info
+        if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
+        run: |
+          conda info
+  
+      - name: Conda list
+        if: ${{ matrix.PACKAGE_MANAGER == 'conda' }}
+        run: |
+          conda list
+
+      - name: Pip list
+        if: ${{ matrix.PACKAGE_MANAGER == 'pip' }}
+        run: |
+          pip list
 
       - name: Run test suite
-        shell: bash -l {0}
         run: |
           pytest ${{ env.PYTEST_ARGS }}
 
       - name: Test command
-        shell: bash -l {0}
         run: |
           start_jupyter_cm
           start_jupyter_cm --remove
-
