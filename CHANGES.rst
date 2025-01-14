@@ -1,6 +1,9 @@
 2.4.0.dev0 (UNRELEASED)
 -----------------------
 
+* Drop support for python 3.8
+* Update GitHub workflows
+
 2.3.2 (2024-05-18)
 ------------------
 * Update GitHub workflows
