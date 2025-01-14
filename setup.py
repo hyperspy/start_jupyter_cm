@@ -48,7 +48,6 @@ setup(
     url="https://github.com/hyperspy/start_jupyter_cm",
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
