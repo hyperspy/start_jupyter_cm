@@ -75,7 +75,7 @@ jobs:
         run: |
           conda install pip
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         if: ${{ matrix.PACKAGE_MANAGER == 'pip' }}
         name: Install Python
         with:
