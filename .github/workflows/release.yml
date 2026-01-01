@@ -31,7 +31,7 @@ jobs:
       id-token: write
     steps:
     - name: Download dist
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         name: dist
         path: dist
@@ -57,4 +57,4 @@ jobs:
         uses: actions/checkout@v6
       - name: Create Release
         if: ${{ startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'hyperspy' }}
-        uses: softprops/action-gh-release@6da8fa9354ddfdc4aeace5fc48d7f679b5214090
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b
